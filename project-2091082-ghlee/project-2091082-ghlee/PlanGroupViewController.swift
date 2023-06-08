@@ -14,8 +14,10 @@ class PlanGroupViewController: UIViewController {
     @IBOutlet weak var planGroupTableView: UITableView!
     var planGroup: PlanGroup!
     var selectedDate: Date? = Date()     // 나중에 필요하다
-
     
+    override func viewWillAppear(_ animated: Bool) {
+        getCommitResource(author: "Ga-Long", commitDate: "2023-06-06")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +27,7 @@ class PlanGroupViewController: UIViewController {
         planGroupTableView.delegate = self
         fsCalendar.dataSource = self                // 칼렌다의 데이터소스로 등록
         fsCalendar.delegate = self                  // 칼렌다의 딜리게이트로 등록
-
+        
         // 단순히 planGroup객체만 생성한다
         planGroup = PlanGroup(parentNotification: receivingNotification)
         planGroup.queryData(date: Date())       // 이달의 데이터를 가져온다. 데이터가 오면 planGroupListener가 호출된다.
@@ -33,10 +35,10 @@ class PlanGroupViewController: UIViewController {
         let leftBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editingPlans1))
         navigationItem.leftBarButtonItem = leftBarButtonItem
         navigationItem.title = "Plan Group"
-
-
-
+        
+        
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         // 여기서 호출하는 이유는 present라는 함수 ViewController의 함수인데 이함수는 ViewController의 Layout이 완료된 이후에만 동작하기 때문
         Owner.loadOwner(sender: self)
@@ -45,7 +47,7 @@ class PlanGroupViewController: UIViewController {
         // 데이터가 올때마다 이 함수가 호출되는데 맨 처음에는 기본적으로 add라는 액션으로 데이터가 온다.
         self.planGroupTableView.reloadData()  // 속도를 증가시키기 위해 action에 따라 개별적 코딩도 가능하다.
         fsCalendar.reloadData()     // 뱃지의 내용을 업데이트 한다
-
+        
     }
     
     @IBAction func editingPlans(_ sender: UIButton) {
@@ -59,8 +61,8 @@ class PlanGroupViewController: UIViewController {
     }
     
     @IBAction func addingPlan(_ sender: UIButton) {
-//        let plan = Plan(date: nil, withData: true)        // 가짜 데이터 생성
-//        planGroup.saveChange(plan: plan, action: .Add)    // 단지 데이터베이스에 저장만한다. 그러면 receivingNotification 함수가 호출되고 tableView.reloadData()를 호출하여 생성된 데이터가 테이블뷰에 보이게 된다.
+        //        let plan = Plan(date: nil, withData: true)        // 가짜 데이터 생성
+        //        planGroup.saveChange(plan: plan, action: .Add)    // 단지 데이터베이스에 저장만한다. 그러면 receivingNotification 함수가 호출되고 tableView.reloadData()를 호출하여 생성된 데이터가 테이블뷰에 보이게 된다.
         performSegue(withIdentifier: "AddPlan", sender: self)
     }
 }
@@ -79,7 +81,7 @@ extension PlanGroupViewController{
     @IBAction func addingPlan1(_ sender: UIBarButtonItem) {
         self.performSegue(withIdentifier: "AddPlan", sender: self)
     }
-
+    
 }
 
 extension PlanGroupViewController: UITableViewDataSource{
@@ -94,19 +96,19 @@ extension PlanGroupViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //let cell = UITableViewCell(style: .value1, reuseIdentifier: "") // TableViewCell을 생성한다
         let cell = tableView.dequeueReusableCell(withIdentifier: "PlanTableViewCell")!
-
+        
         // planGroup는 대략 1개월의 플랜을 가지고 있다.
         let plan = planGroup.getPlans(date:selectedDate)[indexPath.row] // Date를 주지않으면 전체 plan을 가지고 온다
-
+        
         // 적절히 cell에 데이터를 채움
         //cell.textLabel!.text = plan.date.toStringDateTime()
         //cell.detailTextLabel?.text = plan.content
         (cell.contentView.subviews[0] as! UILabel).text = plan.date.toStringDateTime()
         (cell.contentView.subviews[2] as! UILabel).text = plan.owner
         (cell.contentView.subviews[1] as! UILabel).text = plan.content
-
+        
         return cell
-
+        
     }
     
     
@@ -120,7 +122,7 @@ extension PlanGroupViewController: UITableViewDelegate{
             let plan = self.planGroup.getPlans(date:selectedDate)[indexPath.row]
             let title = "Delete \(plan.content)"
             let message = "Are you sure you want to delete this item?"
-
+            
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { (action:UIAlertAction) -> Void in
@@ -135,7 +137,7 @@ extension PlanGroupViewController: UITableViewDelegate{
             alertController.addAction(deleteAction)
             present(alertController, animated: true, completion: nil) //여기서 waiting 하지 않는다
         }
-
+        
     }
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
@@ -145,7 +147,7 @@ extension PlanGroupViewController: UITableViewDelegate{
         planGroup.changePlan(from: from, to: to)
         tableView.moveRow(at: sourceIndexPath, to: destinationIndexPath)
     }
-
+    
 }
 
 
@@ -170,14 +172,14 @@ extension PlanGroupViewController{
             // 빈 plan을 생성하여 전달한다
             planDetailViewController.plan = Plan(date:selectedDate, withData: false)
             planGroupTableView.selectRow(at: nil, animated: true, scrollPosition: .none)
-
+            
         }
     }
-
+    
     
     // prepare함수에서 PlanDetailViewController에게 전달한다
     func saveChange(plan: Plan){
-
+        
         // 만약 현재 planGroupTableView에서 선택된 row가 있다면,
         // 즉, planGroupTableView의 row를 클릭하여 PlanDetailViewController로 전이 한다면
         if planGroupTableView.indexPathForSelectedRow != nil{
@@ -187,7 +189,7 @@ extension PlanGroupViewController{
             planGroup.saveChange(plan: plan, action: .Add)
         }
     }
-
+    
 }
 
 extension PlanGroupViewController: FSCalendarDelegate, FSCalendarDataSource{
@@ -211,4 +213,45 @@ extension PlanGroupViewController: FSCalendarDelegate, FSCalendarDataSource{
         }
         return nil
     }
+}
+
+extension PlanGroupViewController{
+    func getCommitResource(author : String, commitDate : String){
+        
+        if let url = URL(string: "https://api.github.com/search/commits?q=author:\(author)+committer-date:\(commitDate)") {
+            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+                if let error = error {
+                    print("Error: \(error)")
+                    return
+                }
+                
+                if let data = data {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                        if let totalCount = json?["total_count"] as? Int {
+                            print("Total Count: \(totalCount)")
+                        }
+                        
+                        if let items = json?["items"] as? [[String: Any]] {
+                            for item in items {
+                                if let commit = item["commit"] as? [String: Any],
+                                   let commitDate = commit["committer"] as? [String: Any],
+                                   let commitMessage = commit["message"] as? String {
+                                    print("Date: \(commitDate)")
+                                    print("Message: \(commitMessage)")
+                                }
+                            }
+                        }
+                    } catch {
+                        print("Error parsing JSON: \(error)")
+                    }
+                }
+            }
+            
+            task.resume()
+        }
+
+        
+    }
+    
 }

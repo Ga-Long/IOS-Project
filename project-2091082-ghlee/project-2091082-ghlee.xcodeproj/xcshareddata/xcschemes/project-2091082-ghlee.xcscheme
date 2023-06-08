@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E687A74429F8DE7100B0B455"
-               BuildableName = "project-&#x1109;&#x1169;&#x1109;&#x1173;&#x110f;&#x1169;&#x1103;&#x1173;-2091082-ghlee.app"
-               BlueprintName = "project-&#xc18c;&#xc2a4;&#xcf54;&#xb4dc;-2091082-ghlee"
-               ReferencedContainer = "container:project-&#x1109;&#x1169;&#x1109;&#x1173;&#x110f;&#x1169;&#x1103;&#x1173;-2091082-ghlee.xcodeproj">
+               BuildableName = "project-2091082-ghlee.app"
+               BlueprintName = "project-2091082-ghlee"
+               ReferencedContainer = "container:project-2091082-ghlee.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E687A74429F8DE7100B0B455"
-            BuildableName = "project-&#x1109;&#x1169;&#x1109;&#x1173;&#x110f;&#x1169;&#x1103;&#x1173;-2091082-ghlee.app"
-            BlueprintName = "project-&#xc18c;&#xc2a4;&#xcf54;&#xb4dc;-2091082-ghlee"
-            ReferencedContainer = "container:project-&#x1109;&#x1169;&#x1109;&#x1173;&#x110f;&#x1169;&#x1103;&#x1173;-2091082-ghlee.xcodeproj">
+            BuildableName = "project-2091082-ghlee.app"
+            BlueprintName = "project-2091082-ghlee"
+            ReferencedContainer = "container:project-2091082-ghlee.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E687A74429F8DE7100B0B455"
-            BuildableName = "project-&#x1109;&#x1169;&#x1109;&#x1173;&#x110f;&#x1169;&#x1103;&#x1173;-2091082-ghlee.app"
-            BlueprintName = "project-&#xc18c;&#xc2a4;&#xcf54;&#xb4dc;-2091082-ghlee"
-            ReferencedContainer = "container:project-&#x1109;&#x1169;&#x1109;&#x1173;&#x110f;&#x1169;&#x1103;&#x1173;-2091082-ghlee.xcodeproj">
+            BuildableName = "project-2091082-ghlee.app"
+            BlueprintName = "project-2091082-ghlee"
+            ReferencedContainer = "container:project-2091082-ghlee.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
