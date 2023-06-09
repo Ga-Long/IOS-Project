@@ -14,10 +14,8 @@ class PlanGroupViewController: UIViewController {
     @IBOutlet weak var planGroupTableView: UITableView!
     var planGroup: PlanGroup!
     var selectedDate: Date? = Date()     // 나중에 필요하다
-    
-    override func viewWillAppear(_ animated: Bool) {
-        getCommitResource(author: "Ga-Long", commitDate: "2023-06-06")
-    }
+    var commitCounts: [String: Int] = [:] // 일일 commit 갯수 저장
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +34,15 @@ class PlanGroupViewController: UIViewController {
         navigationItem.leftBarButtonItem = leftBarButtonItem
         navigationItem.title = "Plan Group"
         
+        // 현재 날짜 정보 가져오기
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: currentDate)
+        let month = calendar.component(.month, from: currentDate)
         
+        // getCommitsForMonth 함수 호출
+        getCommitsForMonth(author: "Ga-Long", year: year, month: month)
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -192,7 +198,7 @@ extension PlanGroupViewController{
     
 }
 
-extension PlanGroupViewController: FSCalendarDelegate, FSCalendarDataSource{
+extension PlanGroupViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance{
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         // 날짜가 선택되면 호출된다
         selectedDate = date.setCurrentTime()
@@ -203,6 +209,13 @@ extension PlanGroupViewController: FSCalendarDelegate, FSCalendarDataSource{
         // 스와이프로 월이 변경되면 호출된다
         selectedDate = calendar.currentPage
         planGroup.queryData(date: calendar.currentPage)
+        
+        // page가 바뀔 때마다 getCommitsForMonth 호출
+        let currentPage = calendar.currentPage
+        let year = Calendar.current.component(.year, from: currentPage)
+        let month = Calendar.current.component(.month, from: currentPage)
+        
+        getCommitsForMonth(author: "Ga-Long", year: year, month: month)
     }
     
     // 이함수를 fsCalendar.reloadData()에 의하여 모든 날짜에 대하여 호출된다.
@@ -213,12 +226,119 @@ extension PlanGroupViewController: FSCalendarDelegate, FSCalendarDataSource{
         }
         return nil
     }
+    
+    // subtitle 글자 색 검정
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, subtitleDefaultColorFor date: Date) -> UIColor? {
+                return UIColor.black
+    }
+    // title 오늘 글자색 검정
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
+        let today = Calendar.current.isDateInToday(date)
+        if today {
+            return UIColor.black   // 오늘의 subtitle 색상을 빨간색으로 설정
+        }
+        return appearance.titleDefaultColor
+    }
+
+    
+    
+    //주어진 날짜를 문자열로 변환
+    func dateToString(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: date)
+    }
+
+    
+//    func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
+//        let cell = calendar.dequeueReusableCell(withIdentifier: "cell", for: date, at: position)
+//
+//        let startDate = calendar.currentPage.startOfMonth()
+//        let endDate = calendar.currentPage.endOfMonth()
+//
+//        if date >= startDate && date <= endDate {
+//            let dateString = dateToString(date: date)
+//            if let totalCount = totalCounts[dateString], totalCount > 0 {
+//                // total_count가 1 이상인 경우 해당 날짜를 초록색으로 색칠
+//                cell.backgroundColor = .green
+//            } else {
+//                cell.backgroundColor = .clear
+//            }
+//        } else {
+//            cell.backgroundColor = .clear
+//        }
+//
+//        return cell
+//    }
+    
+//    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
+//        let startDate = calendar.currentPage.startOfMonth()
+//        let endDate = calendar.currentPage.endOfMonth()
+//
+//        if date >= startDate && date <= endDate {
+//            let dateString = dateToString(date: date)
+//            if let totalCount = totalCounts[dateString], totalCount > 0 {
+//                // total_count가 1 이상인 경우 초록색으로 색칠
+//                return .green
+//            }
+//        }
+//
+//        // 그 외의 경우 기본 배경색 사용
+//        return nil
+//    }
+    
+    // 현재 페이지에서 totalCounts에 따라 새싹 무늬 나타냄
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
+        let startDate = calendar.currentPage.startOfMonth()
+        let endDate = calendar.currentPage.endOfMonth()
+
+        if date >= startDate && date <= endDate {
+            // 선택한 날짜를 초록색으로 표시
+            if Calendar.current.isDateInToday(date) {
+                let grassImage = UIImage(named: "grass")?.rotate(degrees: 180)
+                let yellowColor = UIColor.yellow.withAlphaComponent(0.3) // 투명도가 0.3인 노란색
+                
+                let combinedImage = UIGraphicsImageRenderer(size: grassImage?.size ?? CGSize.zero).image { _ in
+                    yellowColor.setFill()
+                    UIBezierPath(rect: CGRect(origin: .zero, size: grassImage?.size ?? CGSize.zero)).fill()
+                    grassImage?.draw(at: .zero)
+                }
+                
+                return UIColor(patternImage: combinedImage)
+            } else {
+                let image = UIImage(named: "grass")?.rotate(degrees: 180)
+                return UIColor(patternImage: image!)
+            }
+            
+        }
+
+        // 그 외의 경우 기본 배경색 사용
+        return nil
+    }
+    
+    
+
+}
+
+//180도 회전
+extension UIImage {
+    func rotate(degrees: CGFloat) -> UIImage? {
+        let radians = degrees * CGFloat.pi / 180.0
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        let context = UIGraphicsGetCurrentContext()
+        context?.translateBy(x: size.width / 2, y: size.height / 2)
+        context?.rotate(by: radians)
+        draw(in: CGRect(origin: CGPoint(x: -size.width / 2, y: -size.height / 2), size: size))
+        let rotatedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return rotatedImage
+    }
 }
 
 extension PlanGroupViewController{
-    func getCommitResource(author : String, commitDate : String){
-        
-        if let url = URL(string: "https://api.github.com/search/commits?q=author:\(author)+committer-date:\(commitDate)") {
+    // url 접근
+    func getCommitResource(author: String, startDate: String, endDate: String, commitDate: String) {
+        if let url = URL(string: "https://api.github.com/search/commits?q=author:\(author)+committer-date:\(startDate)..<\(endDate)") {
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let error = error {
                     print("Error: \(error)")
@@ -226,19 +346,41 @@ extension PlanGroupViewController{
                 }
                 
                 if let data = data {
+
                     do {
                         let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
                         if let totalCount = json?["total_count"] as? Int {
-                            print("Total Count: \(totalCount)")
+                            DispatchQueue.main.async {
+                                print("Total Count: \(totalCount)")
+                            }
                         }
-                        
                         if let items = json?["items"] as? [[String: Any]] {
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "yyyy-MM-dd"
+                            
                             for item in items {
                                 if let commit = item["commit"] as? [String: Any],
                                    let commitDate = commit["committer"] as? [String: Any],
-                                   let commitMessage = commit["message"] as? String {
-                                    print("Date: \(commitDate)")
-                                    print("Message: \(commitMessage)")
+                                   let commitDateString = commitDate["date"] as? String {
+                                    let date = dateFormatter.date(from: commitDateString)
+                                    let formattedDate = dateFormatter.string(from: date!) //date 가지고옴
+                                    
+                                    DispatchQueue.main.async {
+                                        if let count = self.commitCounts[formattedDate] { // 해당 formattedDate에 맞는 commitCounts값 가지고 와서
+                                            self.commitCounts[formattedDate] = count + 1 // 1 추가
+                                        } else {
+                                            self.commitCounts[formattedDate] = 1
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            // commitCounts 딕셔너리에는 매일 커밋한 갯수가 저장됩니다.
+                            print("Commit Counts: \(self.commitCounts)")
+                            
+                            DispatchQueue.main.async {
+                                for (date, count) in self.commitCounts {
+                                    print("Date: \(date), Count: \(count)")
                                 }
                             }
                         }
@@ -247,11 +389,31 @@ extension PlanGroupViewController{
                     }
                 }
             }
-            
+
             task.resume()
         }
-
-        
     }
+
+
+
+    //한달 단위로 가져오기
+    func getCommitsForMonth(author: String, year: Int, month: Int) {
+        let calendar = Calendar.current
+        let startDateComponents = DateComponents(year: year, month: month, day: 1)
+        let endDateComponents = DateComponents(year: year, month: month + 1, day: 1)
+
+        if let startDate = calendar.date(from: startDateComponents),
+           let endDate = calendar.date(from: endDateComponents) {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let startDateString = dateFormatter.string(from: startDate)
+            let endDateString = dateFormatter.string(from: endDate)
+
+            print("startDateString: \(startDateString) endDateString: \(endDateString) ")
+            getCommitResource(author: author, startDate: startDateString, endDate: endDateString, commitDate: startDateString)
+        }
+    }
+
+
     
 }

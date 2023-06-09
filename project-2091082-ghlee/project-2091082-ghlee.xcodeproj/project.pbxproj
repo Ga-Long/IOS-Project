@@ -10,6 +10,7 @@
 		29046E9C2A30DA2700235EEF /* Co-mit.png in Resources */ = {isa = PBXBuildFile; fileRef = 29046E9B2A30DA2700235EEF /* Co-mit.png */; };
 		29046EA22A323D7100235EEF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29046EA12A323D7100235EEF /* GoogleService-Info.plist */; };
 		29046EA42A32405E00235EEF /* CommitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29046EA32A32405E00235EEF /* CommitData.swift */; };
+		29046EA62A330A0400235EEF /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29046EA52A330A0400235EEF /* Date.swift */; };
 		29564DB82A1B39890081D6EC /* DbFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29564DB72A1B39890081D6EC /* DbFirebase.swift */; };
 		29564DBA2A1B3E3B0081D6EC /* DbFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29564DB92A1B3E3B0081D6EC /* DbFile.swift */; };
 		29E6D42E2A30CFC50051FE7D /* grass.png in Resources */ = {isa = PBXBuildFile; fileRef = 29E6D42D2A30CFC50051FE7D /* grass.png */; };
@@ -34,6 +35,7 @@
 		29046E9B2A30DA2700235EEF /* Co-mit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Co-mit.png"; path = "../../../../../../Downloads/Co-mit.png"; sourceTree = "<group>"; };
 		29046EA12A323D7100235EEF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		29046EA32A32405E00235EEF /* CommitData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitData.swift; sourceTree = "<group>"; };
+		29046EA52A330A0400235EEF /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		29564DB72A1B39890081D6EC /* DbFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DbFirebase.swift; sourceTree = "<group>"; };
 		29564DB92A1B3E3B0081D6EC /* DbFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DbFile.swift; sourceTree = "<group>"; };
 		29E6D42D2A30CFC50051FE7D /* grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grass.png; path = ../../../../../../Downloads/grass.png; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				29564DB72A1B39890081D6EC /* DbFirebase.swift */,
 				29564DB92A1B3E3B0081D6EC /* DbFile.swift */,
 				29046EA32A32405E00235EEF /* CommitData.swift */,
+				29046EA52A330A0400235EEF /* Date.swift */,
 			);
 			path = "project-2091082-ghlee";
 			sourceTree = "<group>";
@@ -200,6 +203,7 @@
 				E687A77F29F8E9C800B0B455 /* DbMemory.swift in Sources */,
 				E687A74929F8DE7100B0B455 /* AppDelegate.swift in Sources */,
 				29564DB82A1B39890081D6EC /* DbFirebase.swift in Sources */,
+				29046EA62A330A0400235EEF /* Date.swift in Sources */,
 				E687A74B29F8DE7100B0B455 /* SceneDelegate.swift in Sources */,
 				29564DBA2A1B3E3B0081D6EC /* DbFile.swift in Sources */,
 				E687A77B29F8E5F800B0B455 /* Plan.swift in Sources */,
