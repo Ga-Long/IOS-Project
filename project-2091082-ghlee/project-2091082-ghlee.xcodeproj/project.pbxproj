@@ -13,7 +13,12 @@
 		29046EA62A330A0400235EEF /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29046EA52A330A0400235EEF /* Date.swift */; };
 		29564DB82A1B39890081D6EC /* DbFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29564DB72A1B39890081D6EC /* DbFirebase.swift */; };
 		29564DBA2A1B3E3B0081D6EC /* DbFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29564DB92A1B3E3B0081D6EC /* DbFile.swift */; };
+		29DF3E3A2A34CC6D0039C06B /* MeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3E392A34CC6D0039C06B /* MeViewController.swift */; };
+		29DF3E3C2A34D4F60039C06B /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3E3B2A34D4F60039C06B /* StartViewController.swift */; };
 		29E6D42E2A30CFC50051FE7D /* grass.png in Resources */ = {isa = PBXBuildFile; fileRef = 29E6D42D2A30CFC50051FE7D /* grass.png */; };
+		29F0AB6C2A34DFF0006B3959 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F0AB6B2A34DFF0006B3959 /* SignUpViewController.swift */; };
+		29F0AB6E2A34E001006B3959 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F0AB6D2A34E001006B3959 /* LoginViewController.swift */; };
+		29F0AB712A35B2A1006B3959 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 29F0AB702A35B2A1006B3959 /* FirebaseAuth */; };
 		E65EB39A29FA2794000324ED /* PlanDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65EB39929FA2794000324ED /* PlanDetailViewController.swift */; };
 		E65EB39C29FA5F47000324ED /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65EB39B29FA5F47000324ED /* Owner.swift */; };
 		E661A21D2A13977E00476739 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = E661A21C2A13977E00476739 /* FSCalendar */; };
@@ -38,7 +43,11 @@
 		29046EA52A330A0400235EEF /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		29564DB72A1B39890081D6EC /* DbFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DbFirebase.swift; sourceTree = "<group>"; };
 		29564DB92A1B3E3B0081D6EC /* DbFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DbFile.swift; sourceTree = "<group>"; };
+		29DF3E392A34CC6D0039C06B /* MeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeViewController.swift; sourceTree = "<group>"; };
+		29DF3E3B2A34D4F60039C06B /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		29E6D42D2A30CFC50051FE7D /* grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grass.png; path = ../../../../../../Downloads/grass.png; sourceTree = "<group>"; };
+		29F0AB6B2A34DFF0006B3959 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		29F0AB6D2A34E001006B3959 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E65EB39929FA2794000324ED /* PlanDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDetailViewController.swift; sourceTree = "<group>"; };
 		E65EB39B29FA5F47000324ED /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
 		E687A74529F8DE7100B0B455 /* project-2091082-ghlee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "project-2091082-ghlee.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,6 +71,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E661A21D2A13977E00476739 /* FSCalendar in Frameworks */,
+				29F0AB712A35B2A1006B3959 /* FirebaseAuth in Frameworks */,
 				E661A2202A14481C00476739 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,11 +79,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		29F0AB6F2A35B2A1006B3959 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E687A73C29F8DE7100B0B455 = {
 			isa = PBXGroup;
 			children = (
 				E687A74729F8DE7100B0B455 /* project-2091082-ghlee */,
 				E687A74629F8DE7100B0B455 /* Products */,
+				29F0AB6F2A35B2A1006B3959 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,6 +127,10 @@
 				29564DB92A1B3E3B0081D6EC /* DbFile.swift */,
 				29046EA32A32405E00235EEF /* CommitData.swift */,
 				29046EA52A330A0400235EEF /* Date.swift */,
+				29DF3E392A34CC6D0039C06B /* MeViewController.swift */,
+				29DF3E3B2A34D4F60039C06B /* StartViewController.swift */,
+				29F0AB6B2A34DFF0006B3959 /* SignUpViewController.swift */,
+				29F0AB6D2A34E001006B3959 /* LoginViewController.swift */,
 			);
 			path = "project-2091082-ghlee";
 			sourceTree = "<group>";
@@ -132,6 +154,7 @@
 			packageProductDependencies = (
 				E661A21C2A13977E00476739 /* FSCalendar */,
 				E661A21F2A14481C00476739 /* FirebaseFirestore */,
+				29F0AB702A35B2A1006B3959 /* FirebaseAuth */,
 			);
 			productName = "ch09-leejaemoon-tableView";
 			productReference = E687A74529F8DE7100B0B455 /* project-2091082-ghlee.app */;
@@ -194,9 +217,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29F0AB6E2A34E001006B3959 /* LoginViewController.swift in Sources */,
+				29DF3E3A2A34CC6D0039C06B /* MeViewController.swift in Sources */,
+				29DF3E3C2A34D4F60039C06B /* StartViewController.swift in Sources */,
 				E687A77D29F8E99C00B0B455 /* Database.swift in Sources */,
 				E687A77929F8E53B00B0B455 /* ExtendedDate.swift in Sources */,
 				E687A78129F8EA9600B0B455 /* PlanGroup.swift in Sources */,
+				29F0AB6C2A34DFF0006B3959 /* SignUpViewController.swift in Sources */,
 				29046EA42A32405E00235EEF /* CommitData.swift in Sources */,
 				E65EB39C29FA5F47000324ED /* Owner.swift in Sources */,
 				E687A74D29F8DE7100B0B455 /* PlanGroupViewController.swift in Sources */,
@@ -429,6 +456,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		29F0AB702A35B2A1006B3959 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E661A21E2A14481C00476739 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
 		E661A21C2A13977E00476739 /* FSCalendar */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E661A21B2A13977E00476739 /* XCRemoteSwiftPackageReference "FSCalendar" */;
