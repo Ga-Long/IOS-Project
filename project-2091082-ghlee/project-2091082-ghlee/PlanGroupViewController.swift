@@ -8,6 +8,7 @@
 import UIKit
 import FSCalendar
 
+
 class PlanGroupViewController: UIViewController {
     @IBOutlet weak var fsCalendar: FSCalendar!
     
@@ -42,8 +43,23 @@ class PlanGroupViewController: UIViewController {
         let month = calendar.component(.month, from: currentDate)
         
         // getCommitsForMonth 함수 호출
-        getCommitsForMonth(author: Owner.getOwner(), year: year, month: month)
+        //getCommitsForMonth(author: Owner.getOwner(), year: year, month: month)
         //getCommit(author: "Ga-Long", dateString: "2023-06-07")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getCommit(startDate: "2023-06-01", endDate: "2023-06-13") { commitCountByDate, error in
+            if let error = error {
+                // 오류 처리
+                print("Failed to get commit counts: \(error)")
+            } else if let commitCountByDate = commitCountByDate {
+                // 결과 처리
+                for (date, count) in commitCountByDate {
+                    print("\(date): \(count) commits")
+                }
+            }
+        }
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -300,111 +316,147 @@ extension UIImage {
 
 extension PlanGroupViewController{
     // url 접근
-    func getCommitResource(author: String, year: Int, month: Int) {
-        let calendar = Calendar.current
-        let now = Date()
-        // 현재 년도와 이번 달
-        let year = calendar.component(.year, from: now)
-        let month = calendar.component(.month, from: now)
-        // 시작 날
-        let startDateComponents = DateComponents(year: year, month: month, day: 1)
-        guard let startDate = calendar.date(from: startDateComponents),
-              var finalEndDate = calendar.date(byAdding: .month, value: 1, to: startDate) else {
+//    func getCommitResource(author: String, year: Int, month: Int) {
+//        let calendar = Calendar.current
+//        let now = Date()
+//        // 현재 년도와 이번 달
+//        let year = calendar.component(.year, from: now)
+//        let month = calendar.component(.month, from: now)
+//        // 시작 날
+//        let startDateComponents = DateComponents(year: year, month: month, day: 1)
+//        guard let startDate = calendar.date(from: startDateComponents),
+//              var finalEndDate = calendar.date(byAdding: .month, value: 1, to: startDate) else {
+//            return
+//        }
+//
+//        if year == calendar.component(.year, from: now) && month == calendar.component(.month, from: now) {
+//            finalEndDate = now
+//        }
+//
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "yyyy-MM-dd"
+//
+//        var currentDate = startDate
+//
+//        let group = DispatchGroup() // Dispatch Group 생성 - 비동기 처리
+//        let dispatchQueue = DispatchQueue(label: "com.example.apiQueue")
+//
+////        print("2. currentDate: \(currentDate),finalEndDate: \(finalEndDate) ")
+//        while currentDate <= finalEndDate {
+//            print("2. currentDate: \(currentDate),finalEndDate: \(finalEndDate) ")
+//
+//            group.enter() // Dispatch Group에 진입
+//
+//            let dateString = dateFormatter.string(from: currentDate)
+//            let urlString = "https://api.github.com/search/commits?q=author:\(author)+committer-date:\(dateString)"
+//
+//            if let url = URL(string: urlString) {
+//                let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+//                    defer {
+//                        group.leave() // Dispatch Group에서 빠져나옴
+//                    }
+//
+//                    if let error = error {
+//                        print("Error: \(error)")
+//                        return
+//                    }
+//
+//                    if let data = data {
+//                        do {
+//                            let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+//                            if let totalCount = json?["total_count"] as? Int, totalCount > 0 {
+//                                dispatchQueue.sync {
+//                                    self.commitCounts[dateString] = totalCount
+//
+//                                }
+//                            }
+//                        } catch {
+//                            print("Error parsing JSON: \(error)")
+//                        }
+//                    }
+//                    // 모든 작업이 완료되었을 때 출력
+//                    if currentDate == finalEndDate {
+//                        let sortedCounts = self.commitCounts.sorted { $0.key < $1.key }
+//                        for (date, count) in sortedCounts {
+//                            print("Date: \(date), Count: \(count)")
+//                        }
+//                    }
+//                }
+//
+//                task.resume()
+//            }
+//
+//            currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
+//
+//
+//        }
+//
+//
+//    }
+    //실험 - 가져와지는데..
+    func getCommit(startDate: String, endDate: String, completion: @escaping ([String: Int]?, Error?) -> Void) {
+        let appid = Bundle.main.apiKey
+        
+        let urlString = "https://api.github.com/search/commits?q=author:\(Owner.getOwner())+committer-date:\(startDate)..\(endDate)"
+        guard let url = URL(string: urlString) else {
+            completion(nil, NSError(domain: "Invalid URL", code: -1, userInfo: nil))
             return
         }
         
-        if year == calendar.component(.year, from: now) && month == calendar.component(.month, from: now) {
-            finalEndDate = now
-        }
+        let session = URLSession(configuration: .default)
+        let request = URLRequest(url: url)
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-                
-        var currentDate = startDate
-        
-        let group = DispatchGroup() // Dispatch Group 생성 - 비동기 처리
-        let dispatchQueue = DispatchQueue(label: "com.example.apiQueue")
-
-//        print("2. currentDate: \(currentDate),finalEndDate: \(finalEndDate) ")
-        while currentDate <= finalEndDate {
-            print("2. currentDate: \(currentDate),finalEndDate: \(finalEndDate) ")
-
-            group.enter() // Dispatch Group에 진입
-            
-            let dateString = dateFormatter.string(from: currentDate)
-            let urlString = "https://api.github.com/search/commits?q=author:\(author)+committer-date:\(dateString)"
-            
-            if let url = URL(string: urlString) {
-                let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-                    defer {
-                        group.leave() // Dispatch Group에서 빠져나옴
-                    }
-                    
-                    if let error = error {
-                        print("Error: \(error)")
-                        return
-                    }
-                    
-                    if let data = data {
-                        do {
-                            let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-                            if let totalCount = json?["total_count"] as? Int, totalCount > 0 {
-                                dispatchQueue.sync {
-                                    self.commitCounts[dateString] = totalCount
-                                    
-                                }
-                            }
-                        } catch {
-                            print("Error parsing JSON: \(error)")
-                        }
-                    }
-                    // 모든 작업이 완료되었을 때 출력
-                    if currentDate == finalEndDate {
-                        let sortedCounts = self.commitCounts.sorted { $0.key < $1.key }
-                        for (date, count) in sortedCounts {
-                            print("Date: \(date), Count: \(count)")
-                        }
-                    }
-                }
-                
-                task.resume()
+        let task = session.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                completion(nil, error)
+                return
             }
             
-            currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
-
+            if let response = response as? HTTPURLResponse, response.statusCode != 200 {
+                let statusCodeError = NSError(domain: "Invalid HTTP response", code: response.statusCode, userInfo: nil)
+                completion(nil, statusCodeError)
+                return
+            }
             
+            if let data = data {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                    if let commits = json?["items"] as? [[String: Any]] {
+                        var commitCountByDate: [String: Int] = [:]
+                        
+                        // 각 커밋의 날짜를 추출하여 개수를 세기
+                        let dateFormatter = ISO8601DateFormatter()
+                        let calendar = Calendar.current
+                        let dateComponents: Set<Calendar.Component> = [.year, .month, .day]
+                        
+                        for commit in commits {
+                            if let commitData = commit["commit"] as? [String: Any],
+                               let dateString = commitData["committer"] as? String,
+                               let date = dateFormatter.date(from: dateString) {
+                                
+                                let components = calendar.dateComponents(dateComponents, from: date)
+                                let formattedDate = calendar.date(from: components)
+                                let key = dateFormatter.string(from: formattedDate!)
+                                
+                                commitCountByDate[key, default: 0] += 1
+                            }
+                        }
+                        
+                        completion(commitCountByDate, nil)
+                    }
+                } catch {
+                    completion(nil, error)
+                }
+            }
         }
         
-        
+        task.resume()
     }
-    //실험 - 가져와지는데..
-    //    func getCommit(author: String, dateString: String){
-    //        let urlString = "https://api.github.com/search/commits?q=author:\(author)+committer-date:\(dateString)"
-    //        if let url = URL(string: urlString) {
-    //            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-    //                if let error = error {
-    //                    print("Error: \(error)")
-    //                    return
-    //                }
-    //
-    //                if let data = data {
-    //                    do {
-    //                        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-    //                        if let totalCount = json?["total_count"] as? Int {
-    //                            DispatchQueue.main.async {
-    //                                print("tatalCount: \(totalCount)")
-    //                            }
-    //                        }
-    //                    } catch {
-    //                        print("Error parsing JSON: \(error)")
-    //                    }
-    //                }
-    //            }
-    //
-    //            task.resume()
-    //        }
-    //
-    //    }
+
+
+
+    
+    
     
     
     
@@ -424,8 +476,10 @@ extension PlanGroupViewController{
             
             //print("1. startDateString: \(startDateString) endDateString: \(endDateString) ")
             //getCommitResource(author: author, startDate: startDateString, endDate: endDateString, commitDate: startDateString)
-            getCommitResource(author: author, year: year, month: month)
+            //getCommitResource(author: author, year: year, month: month)
         }
+        
+        //getCommit(startDate: "2023-06-01", endDate: "2023-06-12")
     }
     
     

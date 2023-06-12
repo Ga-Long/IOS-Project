@@ -19,6 +19,8 @@
 		29F0AB6C2A34DFF0006B3959 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F0AB6B2A34DFF0006B3959 /* SignUpViewController.swift */; };
 		29F0AB6E2A34E001006B3959 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F0AB6D2A34E001006B3959 /* LoginViewController.swift */; };
 		29F0AB712A35B2A1006B3959 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 29F0AB702A35B2A1006B3959 /* FirebaseAuth */; };
+		29F0AB732A3782E2006B3959 /* GithubInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29F0AB722A3782E2006B3959 /* GithubInfo.plist */; };
+		29F0AB792A378491006B3959 /* HideAPIKEY++Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F0AB782A378491006B3959 /* HideAPIKEY++Bundle.swift */; };
 		E65EB39A29FA2794000324ED /* PlanDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65EB39929FA2794000324ED /* PlanDetailViewController.swift */; };
 		E65EB39C29FA5F47000324ED /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65EB39B29FA5F47000324ED /* Owner.swift */; };
 		E661A21D2A13977E00476739 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = E661A21C2A13977E00476739 /* FSCalendar */; };
@@ -48,6 +50,8 @@
 		29E6D42D2A30CFC50051FE7D /* grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grass.png; path = ../../../../../../Downloads/grass.png; sourceTree = "<group>"; };
 		29F0AB6B2A34DFF0006B3959 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		29F0AB6D2A34E001006B3959 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		29F0AB722A3782E2006B3959 /* GithubInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = GithubInfo.plist; sourceTree = "<group>"; };
+		29F0AB782A378491006B3959 /* HideAPIKEY++Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HideAPIKEY++Bundle.swift"; sourceTree = "<group>"; };
 		E65EB39929FA2794000324ED /* PlanDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDetailViewController.swift; sourceTree = "<group>"; };
 		E65EB39B29FA5F47000324ED /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
 		E687A74529F8DE7100B0B455 /* project-2091082-ghlee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "project-2091082-ghlee.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,6 +135,8 @@
 				29DF3E3B2A34D4F60039C06B /* StartViewController.swift */,
 				29F0AB6B2A34DFF0006B3959 /* SignUpViewController.swift */,
 				29F0AB6D2A34E001006B3959 /* LoginViewController.swift */,
+				29F0AB722A3782E2006B3959 /* GithubInfo.plist */,
+				29F0AB782A378491006B3959 /* HideAPIKEY++Bundle.swift */,
 			);
 			path = "project-2091082-ghlee";
 			sourceTree = "<group>";
@@ -203,6 +209,7 @@
 			files = (
 				29046E9C2A30DA2700235EEF /* Co-mit.png in Resources */,
 				E687A75529F8DE7200B0B455 /* LaunchScreen.storyboard in Resources */,
+				29F0AB732A3782E2006B3959 /* GithubInfo.plist in Resources */,
 				29E6D42E2A30CFC50051FE7D /* grass.png in Resources */,
 				E687A75229F8DE7200B0B455 /* Assets.xcassets in Resources */,
 				29046EA22A323D7100235EEF /* GoogleService-Info.plist in Resources */,
@@ -235,6 +242,7 @@
 				29564DBA2A1B3E3B0081D6EC /* DbFile.swift in Sources */,
 				E687A77B29F8E5F800B0B455 /* Plan.swift in Sources */,
 				E65EB39A29FA2794000324ED /* PlanDetailViewController.swift in Sources */,
+				29F0AB792A378491006B3959 /* HideAPIKEY++Bundle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
