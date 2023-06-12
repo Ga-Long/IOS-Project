@@ -9,7 +9,7 @@ import UIKit
 import FirebaseFirestore
 
 protocol LoginViewControllerDelegate: AnyObject {
-    func didLoginSuccessfully(withGithubID githubID: String)
+    func didLoginSuccessfully(withGithubID githubID: String, withEmail email: String )
 }
 
 class LoginViewController: UIViewController {
@@ -48,45 +48,17 @@ class LoginViewController: UIViewController {
         checkEmailExists(email: email, password: password) { emailExists in
             if emailExists {
                 print("emailExists")
-
-//                self.performSegue(withIdentifier: "PlanGroupViewController", sender: nil)
-//
                 
                 // 1. Users의 해당 이메일의 githubID 주소 가지고 와서 Delegate
                 self.getGitHubIDFromEmailCollection(email: email) { [weak self] githubID in
                     if let githubID = githubID {
-                        self?.delegate?.didLoginSuccessfully(withGithubID: githubID)
+                        self?.delegate?.didLoginSuccessfully(withGithubID: githubID, withEmail: email)
                     } else {
                         print("No githubID")
                     }
                     self?.dismiss(animated: true, completion: nil)
                 }
-                
-                
 
-                
-//                if let startViewController = self.presentingViewController as? StartViewController {
-//                    startViewController.githubID = self.getGitHubIDFromEmailCollection(email: email) // email로 githubID 가져오기
-//                    startViewController.saveGitHubIDToUserDefaults()
-//                    print("saveGitHubIDToUserDefaults() 호출 완료")
-//
-//                    self.dismiss(animated: true) {
-//                        print("self.dismiss(animated:completion:) 완료")
-//
-//                        startViewController.showPlanGroupViewController()
-//                        print("showPlanGroupViewController() 호출 완료")
-//
-//                    }
-//                }
-
-                // 4. PlanGroupViewController 화면으로 전환
-//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                guard let planGroupViewController = storyboard.instantiateViewController(withIdentifier: "PlanGroupViewController") as? PlanGroupViewController else {
-//                    return
-//                }
-//                self.present(planGroupViewController, animated: true, completion: nil)
-
-                
             } else {
                 // Email 컬렉션에 문서가 존재하지 않는 경우
                 self.showLoginAlert()
@@ -94,13 +66,6 @@ class LoginViewController: UIViewController {
         }
 
 
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "PlanGroupViewController" {
-            let planGroupViewController = segue.destination as! PlanGroupViewController
-            // 필요한 데이터를 groupViewController에 전달
-        }
     }
     
     //후행 클로저 사용 -> 비동기적으로 처리

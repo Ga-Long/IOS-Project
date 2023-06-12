@@ -12,6 +12,7 @@ class PlanGroup: NSObject{
     var fromDate, toDate: Date?     // queryPlan 함수에서 주어진다.
     var database: Database!
     var parentNotification: ((Plan?, DbAction?) -> Void)?
+    var githubID : String?
     
     init(parentNotification: ((Plan?, DbAction?) -> Void)? ){
         super.init()
@@ -35,6 +36,9 @@ class PlanGroup: NSObject{
             parentNotification(plan, action) // 역시 부모에게 알림내용을 전달한다.
         }
     }
+//    func setGithubID(withGithubID: String){
+//        self.githubID = withGithubID
+//    }
 }
 extension PlanGroup{    // PlanGroup.swift
     

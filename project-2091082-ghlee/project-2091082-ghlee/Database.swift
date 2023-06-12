@@ -13,7 +13,8 @@ enum DbAction{
 protocol Database{
     // 생성자, 데이터베이스에 변경이 생기면 parentNotification를 호출하여 부모에게 알림
     init(parentNotification: ((Plan?, DbAction?) -> Void)? )
-
+//    func setReference(withGithubID githubID: String)
+    
     // fromDate ~ toDate 사이의 Plan을 읽어 parentNotification를 호출하여 부모에게 알림
     func queryPlan(fromDate: Date, toDate: Date)
 

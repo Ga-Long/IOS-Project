@@ -10,12 +10,17 @@ import UIKit
 // LoginViewController에서 데이터를 받음
 
 class StartViewController: UIViewController, LoginViewControllerDelegate{
-    func didLoginSuccessfully(withGithubID githubID: String) {
+    
+    func didLoginSuccessfully(withGithubID githubID: String, withEmail email: String) {
         print("StartViewController : didLoginSuccessfully() 호출")
         // 로그인 성공 후의 처리 로직
-        UserDefaults.standard.set(githubID, forKey: "githubID")
-        performSegue(withIdentifier: "TabBarController", sender: nil)
+        Owner.setOwner(githubID: githubID)
+        Owner.setEmail(email: email)
         
+        dismiss(animated: true) { [weak self] in
+            // PlanGroupViewController 화면 전환
+            self?.showPlanGroupViewController()
+        }
     }
     
  
@@ -24,13 +29,17 @@ class StartViewController: UIViewController, LoginViewControllerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 만약 "owner"에 값이 존재하면
-        if Owner.getOwner() != "" {
-            // Plan Group View Controller Scene으로 전환
-            performSegue(withIdentifier: "TabBarController", sender: nil)
-
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        print("start: ", Owner.getOwner())
+        // owner, email 값 이미 있으면 PlanGroupViewController 화면으로
+        let ownerLoaded = Owner.loadOwner(sender: self)
+        if ownerLoaded {
+            dismiss(animated: true) { [weak self] in
+                // PlanGroupViewController 화면 전환
+                self?.showPlanGroupViewController()
+            }
         }
-        
     }
     
     @IBAction func signUpButton(_ sender: UIButton) {
@@ -75,20 +84,12 @@ class StartViewController: UIViewController, LoginViewControllerDelegate{
     }
 
     func showPlanGroupViewController() {
-        print("showPlanGroupViewController() 실행")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let planGroupViewController = storyboard.instantiateViewController(withIdentifier: "PlanGroupViewController") as? PlanGroupViewController else {
-            return
-        }
-        navigationController?.pushViewController(planGroupViewController, animated: true)
+        let tabBarController = storyboard.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+        tabBarController.modalPresentationStyle = .fullScreen
+        self.present(tabBarController, animated: true, completion: nil)
+       
     }
     
 }
 
-//extension StartViewController: LoginViewControllerDelegate {
-//    func didLoginWithGithubID(_ githubID: String) {
-//        self.githubID = githubID
-//        saveGitHubIDToUserDefaults()
-//        performSegue(withIdentifier: "PlanGroupSegue", sender: nil)
-//    }
-//}

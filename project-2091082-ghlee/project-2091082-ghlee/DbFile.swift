@@ -8,6 +8,10 @@
 import Foundation
 
 class DbFile: Database {
+//    func setReference(withGithubID githubID: String) {
+//        
+//    }
+    
     
     var dbDir: URL                    // 디렉토리 위치
     var parentNotification: ((Plan?, DbAction?) -> Void)?       // PlanGroup에서 설정

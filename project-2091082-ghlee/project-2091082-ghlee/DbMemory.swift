@@ -8,7 +8,10 @@
 import Foundation
 
 class DbMemory: Database {
- 
+    func setReference(withGithubID githubID: String) {
+        
+    }
+    
     private var storage: [Plan]  // 데이터 저장고
 
     // storgae내의 데이터변화가 있으면 이 함수를 호출해야 함
@@ -43,6 +46,7 @@ extension DbMemory{    // DbMemory.swift
             }
         }
     }
+    
 }
 extension DbMemory{// DbMemory.swift
     // 주어진 플랜에 대하여 삽입, 수정, 삭제를 storage에서 하고

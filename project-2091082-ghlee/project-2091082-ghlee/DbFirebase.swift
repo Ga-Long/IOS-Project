@@ -16,8 +16,13 @@ class DbFirebase: Database {
 
     required init(parentNotification: ((Plan?, DbAction?) -> Void)?) {
         self.parentNotification = parentNotification
-        reference = Firestore.firestore().collection("plans") // 첫번째 "plans"라는 Collection
+        reference = Firestore.firestore().collection(Owner.getOwner()) // 기본 컬렉션 명
     }
+    
+//    func setReference(withGithubID githubID: String) {
+//        reference = Firestore.firestore().collection(githubID)
+//    }
+
     
     func queryPlan(fromDate: Date, toDate: Date) {
         if let existQuery = existQuery{    // 이미 적용 쿼리가 있으면 제거, 중복 방지
@@ -36,8 +41,7 @@ class DbFirebase: Database {
             reference.document(plan.key).delete()    // key로된 plan을 지운다
             return
         }
-        // plan을 아카이빙한다.
-        //let data = try? NSKeyedArchiver.archivedData(withRootObject: plan, requiringSecureCoding: false)
+        
         let dict = plan.toDict().compactMapValues { $0 }
         reference.document(plan.key).setData(dict) //데이터 저장
         

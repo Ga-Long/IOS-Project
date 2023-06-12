@@ -27,6 +27,7 @@ class PlanGroupViewController: UIViewController {
         fsCalendar.delegate = self                  // 칼렌다의 딜리게이트로 등록
         
         // 단순히 planGroup객체만 생성한다
+        //planGroup.setGithubID(withGithubID: Owner.getOwner()) // githubID 넘겨주기
         planGroup = PlanGroup(parentNotification: receivingNotification)
         planGroup.queryData(date: Date())       // 이달의 데이터를 가져온다. 데이터가 오면 planGroupListener가 호출된다.
         //planGroupTableView.isEditing = true
@@ -47,7 +48,8 @@ class PlanGroupViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         // 여기서 호출하는 이유는 present라는 함수 ViewController의 함수인데 이함수는 ViewController의 Layout이 완료된 이후에만 동작하기 때문
-        Owner.loadOwner(sender: self)
+        //Owner.loadOwner(sender: self)
+        print(Owner.getOwner())
     }
     func receivingNotification(plan: Plan?, action: DbAction?){
         // 데이터가 올때마다 이 함수가 호출되는데 맨 처음에는 기본적으로 add라는 액션으로 데이터가 온다.

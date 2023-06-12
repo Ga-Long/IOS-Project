@@ -16,6 +16,8 @@ class MeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        emailLabel.text = Owner.getEmail()
+        authorLabel.text = Owner.getOwner()
         
         
     }
@@ -30,11 +32,9 @@ class MeViewController: UIViewController {
             Owner.owner = nil
             
             // 첫 화면으로 돌아가기
-            if let windowScene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene,
-               let sceneDelegate = windowScene.delegate as? SceneDelegate {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let initialViewController = storyboard.instantiateInitialViewController()
-                sceneDelegate.window?.rootViewController = initialViewController
+            self.dismiss(animated: true) { [weak self] in
+                // PlanGroupViewController 화면 전환
+                self?.showStartViewController()
             }
         }
         
@@ -45,8 +45,14 @@ class MeViewController: UIViewController {
         
         present(alertController, animated: true, completion: nil)
         
-        
-        
+    }
+    
+    func showStartViewController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let startViewController = storyboard.instantiateViewController(withIdentifier: "StartViewController") as! StartViewController
+        startViewController.modalPresentationStyle = .fullScreen
+        self.present(startViewController, animated: true, completion: nil)
+       
     }
     
     
