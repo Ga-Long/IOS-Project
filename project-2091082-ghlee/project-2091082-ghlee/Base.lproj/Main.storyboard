@@ -238,21 +238,21 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="RBc-9H-xsA">
-                                        <rect key="frame" x="0.0" y="76.5" width="398" height="167"/>
+                                        <rect key="frame" x="0.0" y="76.5" width="398" height="124.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sma-Yx-y9r">
-                                                <rect key="frame" x="0.0" y="0.0" width="61" height="167"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="61" height="124.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZpD-jL-g6z">
-                                                <rect key="frame" x="69" y="0.0" width="329" height="167"/>
+                                                <rect key="frame" x="69" y="0.0" width="329" height="124.5"/>
                                             </pickerView>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="eOX-y2-iVn">
-                                        <rect key="frame" x="0.0" y="251.5" width="398" height="453.5"/>
+                                        <rect key="frame" x="0.0" y="209" width="398" height="453.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" horizontalCompressionResistancePriority="751" text="Content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rrB-mw-CNF">
                                                 <rect key="frame" x="0.0" y="0.0" width="61" height="453.5"/>
@@ -270,6 +270,14 @@
                                             </textView>
                                         </subviews>
                                     </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fzh-Tk-Hwg">
+                                        <rect key="frame" x="0.0" y="670.5" width="398" height="34.5"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="OK"/>
+                                        <connections>
+                                            <action selector="okButton:" destination="LPq-zX-1hn" eventType="touchUpInside" id="BXd-DP-71d"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="jWa-wa-2Dc" firstAttribute="trailing" secondItem="Sma-Yx-y9r" secondAttribute="trailing" id="Lad-K2-9Cl"/>

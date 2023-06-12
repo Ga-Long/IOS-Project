@@ -35,17 +35,19 @@ class PlanDetailViewController: UIViewController {
 
     }
     
-//    @IBAction func gotoBack(_ sender: UIButton) {
-//
-//    }
 
-    override func viewWillDisappear(_ animated: Bool) {
+    @IBAction func okButton(_ sender: UIButton) { //ok 버튼 눌렀을 때만 데이터 생성
         plan!.date = dateDatePicker.date
         plan!.owner = ownerLabel.text    // 수정할 수 없는 UILabel이므로 필요없는 연산임
         plan!.kind = Plan.Kind(rawValue: typePicker.selectedRow(inComponent: 0))!
         plan!.content = contentTextView.text
 
         saveChangeDelegate?(plan!)
+        navigationController?.popViewController(animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) { // 뒤로가기 누르면 데이터 수정, 생생
+        
     }
 
 }

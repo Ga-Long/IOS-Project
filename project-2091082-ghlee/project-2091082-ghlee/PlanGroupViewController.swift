@@ -42,7 +42,7 @@ class PlanGroupViewController: UIViewController {
         let month = calendar.component(.month, from: currentDate)
         
         // getCommitsForMonth 함수 호출
-        getCommitsForMonth(author: "Ga-Long", year: year, month: month)
+        getCommitsForMonth(author: Owner.getOwner(), year: year, month: month)
         //getCommit(author: "Ga-Long", dateString: "2023-06-07")
     }
     
@@ -217,7 +217,7 @@ extension PlanGroupViewController: FSCalendarDelegate, FSCalendarDataSource, FSC
         let year = Calendar.current.component(.year, from: currentPage)
         let month = Calendar.current.component(.month, from: currentPage)
         
-        getCommitsForMonth(author: "Ga-Long", year: year, month: month)
+        getCommitsForMonth(author: Owner.getOwner(), year: year, month: month)
     }
     
     // 이함수를 fsCalendar.reloadData()에 의하여 모든 날짜에 대하여 호출된다.
@@ -422,7 +422,7 @@ extension PlanGroupViewController{
             let startDateString = dateFormatter.string(from: startDate)
             let endDateString = dateFormatter.string(from: endDate)
             
-            print("1. startDateString: \(startDateString) endDateString: \(endDateString) ")
+            //print("1. startDateString: \(startDateString) endDateString: \(endDateString) ")
             //getCommitResource(author: author, startDate: startDateString, endDate: endDateString, commitDate: startDateString)
             getCommitResource(author: author, year: year, month: month)
         }
