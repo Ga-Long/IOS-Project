@@ -9,6 +9,7 @@ import UIKit
 class Owner{
     static var owner: String?
     static var email: String?
+    static var monthTotal : Int?
     
     static func loadOwner(sender: UIViewController) -> Bool{ // sender은 present함수를 위해서 필요하다
         if let owner = UserDefaults.standard.string(forKey: "owner"),
@@ -27,6 +28,11 @@ class Owner{
         return ""       // 없으면 “”를 리턴
     }
     
+    static func getMonthTotal() -> Int{
+        if let monthTotal = Owner.monthTotal{return monthTotal}
+        return -1 // 없으면 -1 리턴
+    }
+    
     static func setOwner(githubID: String){
         if !githubID.isEmpty {
             Owner.owner = githubID
@@ -39,5 +45,10 @@ class Owner{
             Owner.email = email
             UserDefaults.standard.set(email, forKey: "email") // UserDefaults에 저장합니다.
         }
+    }
+    
+    static func setMonthTotal(monthTotal: Int){
+        Owner.monthTotal = monthTotal
+        UserDefaults.standard.set(monthTotal, forKey: "monthTotal") // UserDefaults에 저장합니다.
     }
 }

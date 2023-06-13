@@ -17,69 +17,135 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wjw-so-fFX">
-                                <rect key="frame" x="39" y="92" width="113" height="24"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yto-3o-NLD">
-                                <rect key="frame" x="20" y="136" width="374" height="80"/>
-                                <color key="backgroundColor" red="0.85098039215686272" green="0.85098039215686272" blue="0.85098039215686272" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="NeS-ks-bIF"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RAq-B9-GRw">
-                                <rect key="frame" x="39" y="205" width="59" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="2091082@hansung.ac.kr" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QJa-1g-wIM">
-                                <rect key="frame" x="39" y="151" width="192" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fci-ji-dAn">
-                                <rect key="frame" x="291" y="159" width="83" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="로그아웃">
-                                    <backgroundConfiguration key="background">
-                                        <color key="backgroundColor" red="0.14901960784313725" green="0.65098039215686276" blue="0.25490196078431371" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
-                                    </backgroundConfiguration>
-                                    <color key="baseForegroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="logoutButton:" destination="9to-Jd-NTP" eventType="touchUpInside" id="vUb-vU-7xO"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="xyN-JO-9nW">
+                                <rect key="frame" x="20" y="98" width="374" height="158.5"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Q4L-9a-hG0">
+                                        <rect key="frame" x="0.0" y="0.0" width="228.5" height="58.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="한 달 동안!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3fY-8C-1qK">
+                                                <rect key="frame" x="0.0" y="0.0" width="84.5" height="24"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bth-Ga-zQE">
+                                                <rect key="frame" x="0.0" y="29" width="228.5" height="29.5"/>
+                                                <color key="tintColor" red="0.04043199494" green="0.93533915280000002" blue="0.046088613569999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <attributedString key="attributedText">
+                                                    <fragment content="총">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.14901960784313725" green="0.65098039215686276" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="25" name="NanumGothicBold"/>
+                                                            <font key="NSOriginalFont" size="25" name=".SFNS-Regular"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                    <fragment content=" ">
+                                                        <attributes>
+                                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                            <font key="NSFont" size="25" name="NanumGothicBold"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                    <fragment content="13 잔디">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.91764705882352937" green="0.47450980392156861" blue="0.37647058823529411" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="25" name="NanumGothicBold"/>
+                                                            <font key="NSOriginalFont" size="25" name="NanumGothicBold"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                    <fragment content="를">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.91764705882352937" green="0.47450980392156861" blue="0.37647058823529411" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="25" name="NanumGothicBold"/>
+                                                            <font key="NSOriginalFont" size="25" name=".SFNS-Regular"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                    <fragment content=" ">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.91764705882352937" green="0.47450980392156861" blue="0.37647058823529411" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="25" name="NanumGothicBold"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                    <fragment content="심었어요">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.14901960784313725" green="0.65098039215686276" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="25" name="NanumGothicBold"/>
+                                                            <font key="NSOriginalFont" size="25" name=".SFNS-Regular"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                    <fragment content="!">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.14901960784313725" green="0.65098039215686276" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="25" name="NanumGothicBold"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="Cie-WL-4RK">
+                                        <rect key="frame" x="0.0" y="78.5" width="374" height="80"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="GKM-cd-3AP">
+                                                <rect key="frame" x="0.0" y="10" width="191" height="60.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="2091082@hansung.ac.kr" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QJa-1g-wIM">
+                                                        <rect key="frame" x="0.0" y="0.0" width="191" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RAq-B9-GRw">
+                                                        <rect key="frame" x="0.0" y="36.5" width="191" height="24"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fci-ji-dAn">
+                                                <rect key="frame" x="291" y="23" width="83" height="34.5"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="로그아웃">
+                                                    <backgroundConfiguration key="background">
+                                                        <color key="backgroundColor" red="0.14901960784313725" green="0.65098039215686276" blue="0.25490196078431371" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
+                                                    </backgroundConfiguration>
+                                                    <color key="baseForegroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="logoutButton:" destination="9to-Jd-NTP" eventType="touchUpInside" id="vUb-vU-7xO"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.85098039215686272" green="0.85098039215686272" blue="0.85098039215686272" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="80" id="LLy-ul-ou2"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="w0J-rR-MWT"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Wjw-so-fFX" firstAttribute="leading" secondItem="w0J-rR-MWT" secondAttribute="leading" constant="39" id="0n6-oo-XgJ"/>
-                            <constraint firstItem="Wjw-so-fFX" firstAttribute="leading" secondItem="QJa-1g-wIM" secondAttribute="leading" id="3Y9-HM-iQc"/>
-                            <constraint firstItem="Wjw-so-fFX" firstAttribute="top" secondItem="w0J-rR-MWT" secondAttribute="top" constant="44" id="8DG-K5-HBY"/>
-                            <constraint firstItem="RAq-B9-GRw" firstAttribute="top" secondItem="QJa-1g-wIM" secondAttribute="bottom" constant="16" id="HIJ-OP-lmr"/>
-                            <constraint firstItem="w0J-rR-MWT" firstAttribute="bottom" secondItem="RAq-B9-GRw" secondAttribute="bottom" constant="584" id="JO3-rA-32H"/>
-                            <constraint firstItem="w0J-rR-MWT" firstAttribute="trailing" secondItem="Wjw-so-fFX" secondAttribute="trailing" constant="262" id="V5M-59-vO5"/>
-                            <constraint firstItem="Yto-3o-NLD" firstAttribute="top" secondItem="Wjw-so-fFX" secondAttribute="bottom" constant="20" id="XVP-ep-KMq"/>
-                            <constraint firstItem="w0J-rR-MWT" firstAttribute="trailing" secondItem="Yto-3o-NLD" secondAttribute="trailing" constant="20" id="Z3J-kN-qUD"/>
-                            <constraint firstItem="Yto-3o-NLD" firstAttribute="leading" secondItem="w0J-rR-MWT" secondAttribute="leading" constant="20" id="fTc-K4-a62"/>
-                            <constraint firstItem="Wjw-so-fFX" firstAttribute="leading" secondItem="RAq-B9-GRw" secondAttribute="leading" id="hWz-dy-YKb"/>
+                            <constraint firstItem="xyN-JO-9nW" firstAttribute="leading" secondItem="w0J-rR-MWT" secondAttribute="leading" constant="20" id="EXO-hN-SdJ"/>
+                            <constraint firstItem="w0J-rR-MWT" firstAttribute="trailing" secondItem="xyN-JO-9nW" secondAttribute="trailing" constant="20" id="qDV-dB-V0M"/>
+                            <constraint firstItem="xyN-JO-9nW" firstAttribute="top" secondItem="w0J-rR-MWT" secondAttribute="top" constant="50" id="vJh-Rz-2HZ"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Me" image="person.text.rectangle" catalog="system" id="DFD-QR-rSX"/>
                     <connections>
                         <outlet property="authorLabel" destination="RAq-B9-GRw" id="gSn-2g-UjP"/>
                         <outlet property="emailLabel" destination="QJa-1g-wIM" id="X0D-Mk-QoD"/>
+                        <outlet property="totalGrassLabel" destination="bth-Ga-zQE" id="Mj2-fU-8Ny"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bPr-fG-Rml" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
