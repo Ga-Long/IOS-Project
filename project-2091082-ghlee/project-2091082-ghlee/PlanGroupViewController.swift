@@ -20,7 +20,8 @@ class PlanGroupViewController: UIViewController {
     
     @IBOutlet weak var commitMessageLabel: UILabel!
     @IBOutlet weak var totalCommitLabel: UILabel!
-    
+    var CselectedDate: Date?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,39 +47,21 @@ class PlanGroupViewController: UIViewController {
         let year = calendar.component(.year, from: currentDate)
         let month = calendar.component(.month, from: currentDate)
         
+        // UILongPressGestureRecognizer 추가
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPress))
+        totalCommitLabel.addGestureRecognizer(longPressGesture)
+
         // getCommitsForMonth 함수 호출
         //getCommitsForMonth(author: Owner.getOwner(), year: year, month: month)
         //getCommit(author: "Ga-Long", dateString: "2023-06-07")
+        CselectedDate = Date()
+        print("CselectedDate : \(CselectedDate)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         calendarCurrentPageDidChange(fsCalendar) // 이 함수 안에 getMonth() 함수가 있음
         
-        //        getCommit(startDate: "2023-06-01", endDate: "2023-06-11") { commitByMessage,error in
-        //            print("getCommit() 호출")
-        //            if let error = error {
-        //                // 오류 처리
-        //                print("Failed to get commit counts: \(error)")
-        //            } else if let commitByMessage = commitByMessage {
-        //                // 결과 처리
-        //                if commitByMessage.isEmpty {
-        //                    print("No commit counts available")
-        //                } else {
-        //                    for commit in commitByMessage {
-        //                        if let commitDate = commit["date"],
-        //                           let commitMessages = commit["messages"] as? [String] {
-        //                            print("viewWillAppear :Commit Date: \(commitDate)")
-        //                            for message in commitMessages {
-        //                                print("viewWillAppear : Commit Message: \(message)")
-        //                            }
-        //                        }
-        //                    }
-        //
-        //                }
-        //            }
-        //        }
-        //
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -108,6 +91,28 @@ class PlanGroupViewController: UIViewController {
         //        planGroup.saveChange(plan: plan, action: .Add)    // 단지 데이터베이스에 저장만한다. 그러면 receivingNotification 함수가 호출되고 tableView.reloadData()를 호출하여 생성된 데이터가 테이블뷰에 보이게 된다.
         performSegue(withIdentifier: "AddPlan", sender: self)
     }
+    
+    @objc func longPress(_ gesture: UILongPressGestureRecognizer){
+        if gesture.state == .began {
+                    
+            // ShowCommitMessageVC를 Storyboard ID를 이용하여 인스턴스화
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let showCommitMessageVC = storyboard.instantiateViewController(withIdentifier: "ShowCommitMessageVC") as! ShowCommitMessageViewController
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let dateString = dateFormatter.string(from: CselectedDate!) // 선택된 날짜의
+            let commitMessages = commitByMessage.filter { ($0["date"] as? String) == dateString }
+            
+            // ShowCommitMessageViewController에 commitMessages를 전달
+            showCommitMessageVC.commitMessages = commitMessages
+            
+            // 모달로 표시
+            present(showCommitMessageVC, animated: true, completion: nil)
+        }
+        
+    }
+    
 }
 extension PlanGroupViewController{
     @IBAction func editingPlans1(_ sender: UIBarButtonItem) {
@@ -217,6 +222,7 @@ extension PlanGroupViewController{
             planGroupTableView.selectRow(at: nil, animated: true, scrollPosition: .none)
             
         }
+        
     }
     
     
@@ -237,12 +243,17 @@ extension PlanGroupViewController{
 
 extension PlanGroupViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance{
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        
+        // 선택된 날짜를 selectedDate에 업데이트합니다.
+        CselectedDate = date
+        
         // 날짜가 선택되면 호출된다
         selectedDate = date.setCurrentTime()
         planGroup.queryData(date: date)
         
+        // commitInfo 선택된 날짜에 맞게 label들을 바꿈
         updateCommitInfo(for: date)
-
+        
     }
     
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
@@ -304,7 +315,7 @@ extension PlanGroupViewController: FSCalendarDelegate, FSCalendarDataSource, FSC
             if Calendar.current.isDateInToday(date) {
                 return UIColor.yellow.withAlphaComponent(0.3)// 투명도가 0.3인 노란색
             }
-                
+            
             else if commitByDayCount.keys.contains(dateString) {
                 let grassImage = UIImage(named: "grass")?.rotate(degrees: 180)
                 
@@ -323,8 +334,6 @@ extension PlanGroupViewController: FSCalendarDelegate, FSCalendarDataSource, FSC
         // 그 외의 경우 기본 배경색 사용
         return nil
     }
-    
-    
     
 }
 
@@ -350,7 +359,7 @@ extension PlanGroupViewController{
         // 전역변수 초기화..
         commitByDayCount = [:]
         commitByMessage = []
-
+        
         print("getCommit() 실행  =============================")
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ" // 원본 날짜 형식
@@ -388,7 +397,7 @@ extension PlanGroupViewController{
                             // "message" 필드
                             if let message = item["commit"] as? [String: Any],
                                let commitMessage = message["message"] as? String {
-                                print("Commit Message: \(commitMessage)")
+                                //print("Commit Message: \(commitMessage)")
                                 
                                 // Extract "date" field inside committer object
                                 if let commit = item["commit"] as? [String: Any],
@@ -477,7 +486,10 @@ extension PlanGroupViewController{
                     if year == currentYear && month == currentMonth {
                         self.setOwnerMonthTotal() //4. 한 달에 commit한 일 수 구하기
                     }
-
+                    // 처음에 label들 실행
+                    if let selectedDate = self.CselectedDate {
+                        self.updateCommitInfo(for: selectedDate)
+                    }
                 }
             }
             
@@ -503,13 +515,13 @@ extension PlanGroupViewController{
         }
         
         // commitByDayCount 활용하여 원하는 작업 수행
-//        let sortedCommitByDayCount = commitByDayCount.sorted { $0.key < $1.key }
-//
-//        for (date, count) in sortedCommitByDayCount {
-//            print("Date: \(date), Commit Count: \(count)")
-//        }
+        //        let sortedCommitByDayCount = commitByDayCount.sorted { $0.key < $1.key }
+        //
+        //        for (date, count) in sortedCommitByDayCount {
+        //            print("Date: \(date), Commit Count: \(count)")
+        //        }
         
-
+        
     }
     
     //한 달에 commit한 일 수 구하기
@@ -541,3 +553,5 @@ extension PlanGroupViewController{
     }
     
 }
+
+

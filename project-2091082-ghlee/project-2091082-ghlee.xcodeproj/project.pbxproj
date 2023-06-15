@@ -21,6 +21,7 @@
 		29F0AB712A35B2A1006B3959 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 29F0AB702A35B2A1006B3959 /* FirebaseAuth */; };
 		29F0AB732A3782E2006B3959 /* GithubInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29F0AB722A3782E2006B3959 /* GithubInfo.plist */; };
 		29F0AB792A378491006B3959 /* HideAPIKEY++Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F0AB782A378491006B3959 /* HideAPIKEY++Bundle.swift */; };
+		29F0AB7B2A3B67A0006B3959 /* ShowCommitMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F0AB7A2A3B67A0006B3959 /* ShowCommitMessageViewController.swift */; };
 		E65EB39A29FA2794000324ED /* PlanDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65EB39929FA2794000324ED /* PlanDetailViewController.swift */; };
 		E65EB39C29FA5F47000324ED /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65EB39B29FA5F47000324ED /* Owner.swift */; };
 		E661A21D2A13977E00476739 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = E661A21C2A13977E00476739 /* FSCalendar */; };
@@ -52,6 +53,7 @@
 		29F0AB6D2A34E001006B3959 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		29F0AB722A3782E2006B3959 /* GithubInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = GithubInfo.plist; sourceTree = "<group>"; };
 		29F0AB782A378491006B3959 /* HideAPIKEY++Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HideAPIKEY++Bundle.swift"; sourceTree = "<group>"; };
+		29F0AB7A2A3B67A0006B3959 /* ShowCommitMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCommitMessageViewController.swift; sourceTree = "<group>"; };
 		E65EB39929FA2794000324ED /* PlanDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDetailViewController.swift; sourceTree = "<group>"; };
 		E65EB39B29FA5F47000324ED /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
 		E687A74529F8DE7100B0B455 /* project-2091082-ghlee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "project-2091082-ghlee.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,6 +139,7 @@
 				29F0AB6D2A34E001006B3959 /* LoginViewController.swift */,
 				29F0AB722A3782E2006B3959 /* GithubInfo.plist */,
 				29F0AB782A378491006B3959 /* HideAPIKEY++Bundle.swift */,
+				29F0AB7A2A3B67A0006B3959 /* ShowCommitMessageViewController.swift */,
 			);
 			path = "project-2091082-ghlee";
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 			files = (
 				29F0AB6E2A34E001006B3959 /* LoginViewController.swift in Sources */,
 				29DF3E3A2A34CC6D0039C06B /* MeViewController.swift in Sources */,
+				29F0AB7B2A3B67A0006B3959 /* ShowCommitMessageViewController.swift in Sources */,
 				29DF3E3C2A34D4F60039C06B /* StartViewController.swift in Sources */,
 				E687A77D29F8E99C00B0B455 /* Database.swift in Sources */,
 				E687A77929F8E53B00B0B455 /* ExtendedDate.swift in Sources */,
