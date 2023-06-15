@@ -17,7 +17,10 @@ class PlanGroupViewController: UIViewController {
     var selectedDate: Date? = Date()     // 나중에 필요하다
     var commitByDayCount: [String: Int] = [:] // 일일 commit 갯수 저장
     var commitByMessage: [[String: Any]] = [] //List
-    var isLoading: Bool = false // 로딩 상태를 나타내는 플래그
+    
+    @IBOutlet weak var commitMessageLabel: UILabel!
+    @IBOutlet weak var totalCommitLabel: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,15 +91,6 @@ class PlanGroupViewController: UIViewController {
         self.planGroupTableView.reloadData()  // 속도를 증가시키기 위해 action에 따라 개별적 코딩도 가능하다.
         fsCalendar.reloadData()     // 뱃지의 내용을 업데이트 한다
         
-    }
-    func showLoadingUI() {
-        // 로딩 UI 표시
-        isLoading = true
-    }
-    
-    func hideLoadingUI() {
-        // 로딩 UI 숨김
-        isLoading = false
     }
     
     @IBAction func editingPlans(_ sender: UIButton) {
@@ -246,6 +240,9 @@ extension PlanGroupViewController: FSCalendarDelegate, FSCalendarDataSource, FSC
         // 날짜가 선택되면 호출된다
         selectedDate = date.setCurrentTime()
         planGroup.queryData(date: date)
+        
+        updateCommitInfo(for: date)
+
     }
     
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
@@ -391,7 +388,7 @@ extension PlanGroupViewController{
                             // "message" 필드
                             if let message = item["commit"] as? [String: Any],
                                let commitMessage = message["message"] as? String {
-                                //print("Commit Message: \(commitMessage)")
+                                print("Commit Message: \(commitMessage)")
                                 
                                 // Extract "date" field inside committer object
                                 if let commit = item["commit"] as? [String: Any],
@@ -471,14 +468,16 @@ extension PlanGroupViewController{
             let formattedStartDate = dateFormatter.string(from: startDate)
             print("\(formattedStartDate) ~ \(formattedEndDate)")
             
+            // 1. Github Commit API 가져오고 변수 commitByMessage 채움
             getCommit(startDate: formattedStartDate, endDate: formattedEndDate) { commitByMessage, error in
                 DispatchQueue.main.async { // 메인 큐에서 실행
-                    self.getDayCommit()
-                    self.fsCalendar.reloadData()
+                    self.getDayCommit() //2. 커밋한 날짜마다 커밋 갯수 저장
+                    self.fsCalendar.reloadData() //3. UI load
                     
                     if year == currentYear && month == currentMonth {
-                        self.setOwnerMonthTotal()
+                        self.setOwnerMonthTotal() //4. 한 달에 commit한 일 수 구하기
                     }
+
                 }
             }
             
@@ -504,11 +503,11 @@ extension PlanGroupViewController{
         }
         
         // commitByDayCount 활용하여 원하는 작업 수행
-        let sortedCommitByDayCount = commitByDayCount.sorted { $0.key < $1.key }
-
-        for (date, count) in sortedCommitByDayCount {
-            print("Date: \(date), Commit Count: \(count)")
-        }
+//        let sortedCommitByDayCount = commitByDayCount.sorted { $0.key < $1.key }
+//
+//        for (date, count) in sortedCommitByDayCount {
+//            print("Date: \(date), Commit Count: \(count)")
+//        }
         
 
     }
@@ -524,6 +523,21 @@ extension PlanGroupViewController{
         }
     }
     
-    
+    // 선택된 날짜의 commit 내용, 갯수 출력
+    func updateCommitInfo(for date: Date) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateString = dateFormatter.string(from: date)
+        
+        if let commitMessage = commitByMessage.first(where: { ($0["date"] as? String) == dateString })?["message"] as? String {
+            commitMessageLabel.text = commitMessage
+        } else {
+            commitMessageLabel.text = ""
+        }
+        
+        let commitCount = commitByDayCount[dateString] ?? 0
+        let commitText = commitCount == 1 ? "commit" : "commits"
+        totalCommitLabel.text = "총 \(commitCount) 개의 \(commitText)"
+    }
     
 }
