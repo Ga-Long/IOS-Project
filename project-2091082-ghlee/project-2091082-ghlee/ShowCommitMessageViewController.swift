@@ -16,9 +16,7 @@ class ShowCommitMessageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         commitMessageTableView.dataSource = self
-
     }
     
     
@@ -40,7 +38,21 @@ extension ShowCommitMessageViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommitCell", for: indexPath)
         
         let commitMessage = commitMessages[indexPath.row]["message"] as? String
-        cell.textLabel?.text = commitMessage
+        let fullname = commitMessages[indexPath.row]["repoFullname"] as? String
+
+        // 커밋 메시지 출력
+        if let messageLabel = cell.viewWithTag(1) as? UILabel {
+            messageLabel.text = commitMessage
+            messageLabel.textColor = UIColor(red: 38/255, green: 166/255, blue: 65/255, alpha: 1.0) // #26A641
+
+        }
+        // 두 번째 레이블(Tag: 2)을 가리키기 위해 viewWithTag 메서드 사용
+        // repo 경로 출력
+        if let fullnameLabel = cell.viewWithTag(2) as? UILabel {
+            // fullnameLabel을 조작
+            fullnameLabel.text = fullname
+        }
+        
         
         return cell
     }

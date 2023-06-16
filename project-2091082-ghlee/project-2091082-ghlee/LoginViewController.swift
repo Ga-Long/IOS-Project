@@ -96,7 +96,7 @@ class LoginViewController: UIViewController {
     }
     
     func getGitHubIDFromEmailCollection(email: String, completion: @escaping (String?) -> Void) {
-        // 해당 email 컬렉션의 "key" 문서의 "githubID" 값을 가져오는 로직을 구현
+        // 해당 "users" 컬렉션의 email 문서의 "githubID" 값을 가져오는 로직을 구현
         // 필요한 Firebase Firestore API 호출 및 데이터 조회 작업 수행
 
         // 예시: Firebase Firestore에서 해당 문서 가져오기

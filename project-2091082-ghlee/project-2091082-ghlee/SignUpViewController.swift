@@ -57,7 +57,7 @@ class SignUpViewController: UIViewController {
         
     }
     
-    // GitHub ID가 이미 존재하는지 확인하는 함수의 구현
+    // GitHub ID가 존재하는지 확인하는 함수의 구현
     func isExistingGitHubID(_ githubID: String) -> Bool {
         // 필요한 로직을 구현하여 존재 여부를 판단하고 true 또는 false를 반환
         // 예를 들어, 서버 API를 호출하여 GitHub ID의 유효성을 검사하는 등의 작업 수행

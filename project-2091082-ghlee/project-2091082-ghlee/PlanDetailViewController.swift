@@ -46,7 +46,7 @@ class PlanDetailViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    override func viewWillDisappear(_ animated: Bool) { // 뒤로가기 누르면 데이터 수정, 생생
+    override func viewWillDisappear(_ animated: Bool) { // 뒤로가기 누르면 데이터 수정x
         
     }
 

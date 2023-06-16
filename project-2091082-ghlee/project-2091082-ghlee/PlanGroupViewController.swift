@@ -21,11 +21,10 @@ class PlanGroupViewController: UIViewController {
     @IBOutlet weak var commitMessageLabel: UILabel!
     @IBOutlet weak var totalCommitLabel: UILabel!
     var CselectedDate: Date?
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+         
         //Owner.loadOwner(sender: self)
         planGroupTableView.dataSource = self        // 테이블뷰의 데이터 소스로 등록
         planGroupTableView.delegate = self
@@ -41,12 +40,6 @@ class PlanGroupViewController: UIViewController {
         navigationItem.leftBarButtonItem = leftBarButtonItem
         navigationItem.title = "Plan Group"
         
-        // 현재 날짜 정보 가져오기
-        let currentDate = Date()
-        let calendar = Calendar.current
-        let year = calendar.component(.year, from: currentDate)
-        let month = calendar.component(.month, from: currentDate)
-        
         // UILongPressGestureRecognizer 추가
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPress))
         totalCommitLabel.addGestureRecognizer(longPressGesture)
@@ -55,7 +48,8 @@ class PlanGroupViewController: UIViewController {
         //getCommitsForMonth(author: Owner.getOwner(), year: year, month: month)
         //getCommit(author: "Ga-Long", dateString: "2023-06-07")
         CselectedDate = Date()
-        print("CselectedDate : \(CselectedDate)")
+        
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -155,12 +149,34 @@ extension PlanGroupViewController: UITableViewDataSource{
         (cell.contentView.subviews[2] as! UILabel).text = plan.owner
         (cell.contentView.subviews[1] as! UILabel).text = plan.content
         
+        let todoSwitch = UISwitch(frame: CGRect())
+        todoSwitch.addTarget(self, action: #selector(todoSwitchChanged(_:)), for: .valueChanged)
+        cell.accessoryView = todoSwitch
+        todoSwitch.isOn = plan.todo
+        
         return cell
+        
         
     }
     
-    
+    @objc func todoSwitchChanged(_ sender: UISwitch) {
+        DispatchQueue.main.async {
+            guard let cell = sender.superview as? UITableViewCell,
+                  let indexPath = self.planGroupTableView.indexPath(for: cell) else {
+                return
+            }
+            
+            let plan = self.planGroup.getPlans(date: self.selectedDate)[indexPath.row].clone()
+            plan.todo = sender.isOn
+            // 저장 로직 작성
+            
+            self.saveChange(plan: plan)
+        }
+    }
+
 }
+
+
 
 extension PlanGroupViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -253,6 +269,7 @@ extension PlanGroupViewController: FSCalendarDelegate, FSCalendarDataSource, FSC
         
         // commitInfo 선택된 날짜에 맞게 label들을 바꿈
         updateCommitInfo(for: date)
+        
         
     }
     
@@ -411,12 +428,19 @@ extension PlanGroupViewController{
                                     
                                     //print("Commit Date: \(formattedCommitDate)")
                                     
-                                    // 새로운 사전 대신 딕셔너리를 배열에 추가
-                                    let commitData: [String: Any] = [
-                                        "date": formattedCommitDate,
-                                        "message": commitMessage
-                                    ]
-                                    self.commitByMessage.append(commitData)
+                                    if let repository = item["repository"] as? [String: Any],
+                                       let fullname = repository["full_name"] as? String {
+                                        // fullname 사용
+                                        //print("Repository Full Name: \(fullname)")
+                                        // 새로운 사전 대신 딕셔너리를 배열에 추가
+                                        let commitData: [String: Any] = [
+                                            "date": formattedCommitDate,
+                                            "message": commitMessage,
+                                            "repoFullname": fullname
+                                        ]
+                                        self.commitByMessage.append(commitData)
+                                    }
+                                
                                 }
                             }
                             

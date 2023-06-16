@@ -21,14 +21,15 @@ class Plan: NSObject , NSCoding{
     }
     var key: String;        var date: Date
     var owner: String?;     var kind: Kind
-    var content: String
+    var content: String;     var todo: Bool
     
-    init(date: Date, owner: String?, kind: Kind, content: String){
+    init(date: Date, owner: String?, kind: Kind, content: String, todo:Bool){
         self.key = UUID().uuidString   // 거의 unique한 id를 만들어 낸다.
         self.date = Date(timeInterval: 0, since: date)
         self.owner = Owner.getOwner()
 
         self.kind = kind; self.content = content
+        self.todo = false // 초기값으로 false 설정
         super.init()
     }
     
@@ -39,6 +40,8 @@ class Plan: NSObject , NSCoding{
         aCoder.encode(owner, forKey: "owner")
         aCoder.encode(kind.rawValue, forKey: "kind")
         aCoder.encode(content, forKey: "content")
+        aCoder.encode(todo, forKey: "todo")
+
     }
     // unarchiving할때 호출된다
     required init(coder aDecoder: NSCoder) {
@@ -48,12 +51,14 @@ class Plan: NSObject , NSCoding{
         let rawValue = aDecoder.decodeInteger(forKey: "kind")
         kind = Kind(rawValue: rawValue)!
         content = aDecoder.decodeObject(forKey: "content") as! String? ?? ""
+        todo = aDecoder.decodeBool(forKey: "todo")
+
         super.init()
     }
 }
 
 extension Plan{
-    convenience init(date: Date? = nil, withData: Bool = false){
+    convenience init(date: Date? = nil, withData: Bool = false, todo: Bool = false){
         if withData == true{
             var index = Int(arc4random_uniform(UInt32(Kind.count)))
             let kind = Kind(rawValue: index)! // 이것의 타입은 옵셔널이다. Option+click해보라
@@ -62,10 +67,10 @@ extension Plan{
             index = Int(arc4random_uniform(UInt32(contents.count)))
             let content = contents[index]
             
-            self.init(date: date ?? Date(), owner: "me", kind: kind, content: content)
+            self.init(date: date ?? Date(), owner: "me", kind: kind, content: content, todo: todo)
             
         }else{
-            self.init(date: date ?? Date(), owner: "me", kind: .Etc, content: "")
+            self.init(date: date ?? Date(), owner: "me", kind: .Etc, content: "", todo: todo)
 
         }
     }
@@ -80,6 +85,7 @@ extension Plan{        // Plan.swift
         clonee.owner = self.owner
         clonee.kind = self.kind    // enum도 struct처럼 복제가 된다
         clonee.content = self.content
+        clonee.todo = self.todo
         return clonee
     }
 }
@@ -93,6 +99,7 @@ extension Plan{
         dict["owner"] = owner
         dict["kind"] = kind.rawValue
         dict["content"] = content
+        dict["todo"] = todo // todo 속성 추가
         
         return dict
         
@@ -121,6 +128,7 @@ extension Plan{
         }
         
         content = dict["content"] as? String ?? ""
+        todo = dict["todo"] as? Bool ?? false // todo 속성 초기화
     }
 
 }
