@@ -19,8 +19,8 @@ class LoginViewController: UIViewController {
     
     var githubID: String?
     weak var delegate: LoginViewControllerDelegate?
-
-
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +44,7 @@ class LoginViewController: UIViewController {
         }
         
         
-        // 2. email 있는 email인지 check -> 함수 사용
+        // 2. email이 firebase에 있는지 check -> 함수 사용
         checkEmailExists(email: email, password: password) { emailExists in
             if emailExists {
                 print("emailExists")
@@ -58,22 +58,24 @@ class LoginViewController: UIViewController {
                     }
                     self?.dismiss(animated: true, completion: nil)
                 }
-
+                
             } else {
                 // Email 컬렉션에 문서가 존재하지 않는 경우
                 self.showLoginAlert()
             }
         }
-
-
+        
+        
     }
     
     //후행 클로저 사용 -> 비동기적으로 처리
+    // email 있는지 확인하는 함수
     func checkEmailExists(email: String, password: String, completion: @escaping (Bool) -> Void) {
         print("email \(email), password \(password)")
         let db = Firestore.firestore()
         let collectionRef = db.collection("users")
         
+        // 입력받은 email이 firebase document에 있는지 확인
         collectionRef.whereField("email", isEqualTo: email).getDocuments { (querySnapshot, error) in
             if let error = error {
                 print("Error fetching documents: \(error.localizedDescription)")
@@ -95,14 +97,15 @@ class LoginViewController: UIViewController {
         }
     }
     
+    
     func getGitHubIDFromEmailCollection(email: String, completion: @escaping (String?) -> Void) {
         // 해당 "users" 컬렉션의 email 문서의 "githubID" 값을 가져오는 로직을 구현
         // 필요한 Firebase Firestore API 호출 및 데이터 조회 작업 수행
-
+        
         // 예시: Firebase Firestore에서 해당 문서 가져오기
         let db = Firestore.firestore()
         let documentRef = db.collection("users").document(email)
-
+        
         documentRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 // 문서가 존재하는 경우
@@ -115,7 +118,7 @@ class LoginViewController: UIViewController {
         }
     }
     
-     //textField 다 안채움 알림
+    //textField 다 안채움 알림
     func showloginmalformattedAlert(){
         let alertController = UIAlertController(title: "경고", message: "email, password 다 입력하세요", preferredStyle: .alert)
         let OkAction = UIAlertAction(title: "OK", style: .default, handler: nil)

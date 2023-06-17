@@ -22,10 +22,11 @@ class SignUpViewController: UIViewController {
         super.viewDidLoad()
         
     }
-
+    
     @IBAction func gotoBack(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
+    
     
     @IBAction func signUpButton(_ sender: UIButton) {
         // 1. email , password, githubID 값 받아옴
@@ -60,14 +61,14 @@ class SignUpViewController: UIViewController {
     // GitHub ID가 존재하는지 확인하는 함수의 구현
     func isExistingGitHubID(_ githubID: String) -> Bool {
         // 필요한 로직을 구현하여 존재 여부를 판단하고 true 또는 false를 반환
-        // 예를 들어, 서버 API를 호출하여 GitHub ID의 유효성을 검사하는 등의 작업 수행
+        
         guard let url = URL(string: "https://api.github.com/users/\(githubID)") else {
             return false
         }
         
         let semaphore = DispatchSemaphore(value: 0)
         var statusCode = 0
-        
+        // 해당 url에 요청을 보내 statusCode를 받음
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let httpResponse = response as? HTTPURLResponse {
                 statusCode = httpResponse.statusCode
@@ -86,32 +87,34 @@ class SignUpViewController: UIViewController {
         return false
     }
     
+    // Firebase에 사용자 정보를 저장하는 함수의 구현
     func saveUserToFirebase(email: String, password: String, githubID: String) {
-        // Firebase에 사용자 정보를 저장하는 함수의 구현
+        
         // 필요한 Firebase API 호출 및 데이터 저장 작업 수행
         
         // Cloud Firestore에 "users" 컬렉션에 사용자 데이터 저장
         let db = Firestore.firestore()
+        // "users" 컬렉션에 입력받은 email document 생성
         let userDocument = db.collection("users").document(email)
         
-        userDocument.setData([
+        userDocument.setData([ //data에 email,password,githubID 저장
             "email": email,
             "password": password,
             "githubID": githubID
-        ]) { error in
-            if let error = error {
-                // 데이터 저장 중에 오류가 발생한 경우 처리할 코드
-                // 필요한 알림 또는 사용자 경고를 표시하거나, 오류 메시지를 표시하는 등
-                print("Cloud Firestore 데이터 저장 실패: \(error.localizedDescription)")
-            } else {
-                // 데이터 저장 성공
-                print("Cloud Firestore 데이터 저장 성공")
-                // 데이터 저장이 완료되면 뒤로 돌아가기
-                DispatchQueue.main.async {
-                    self.dismiss(animated: true, completion: nil)
-                }
-            }
-        }
+                             ]) { error in
+                                 if let error = error {
+                                     // 데이터 저장 중에 오류가 발생한 경우 처리할 코드
+                                     // 필요한 알림 또는 사용자 경고를 표시하거나, 오류 메시지를 표시하는 등
+                                     print("Cloud Firestore 데이터 저장 실패: \(error.localizedDescription)")
+                                 } else {
+                                     // 데이터 저장 성공
+                                     print("Cloud Firestore 데이터 저장 성공")
+                                     // 데이터 저장이 완료되면 뒤로 돌아가기
+                                     DispatchQueue.main.async {
+                                         self.dismiss(animated: true, completion: nil)
+                                     }
+                                 }
+                             }
         
     }
     

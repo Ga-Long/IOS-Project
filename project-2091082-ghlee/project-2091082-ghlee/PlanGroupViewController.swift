@@ -24,7 +24,7 @@ class PlanGroupViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-         
+        
         //Owner.loadOwner(sender: self)
         planGroupTableView.dataSource = self        // 테이블뷰의 데이터 소스로 등록
         planGroupTableView.delegate = self
@@ -43,13 +43,10 @@ class PlanGroupViewController: UIViewController {
         // UILongPressGestureRecognizer 추가
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPress))
         totalCommitLabel.addGestureRecognizer(longPressGesture)
-
-        // getCommitsForMonth 함수 호출
-        //getCommitsForMonth(author: Owner.getOwner(), year: year, month: month)
-        //getCommit(author: "Ga-Long", dateString: "2023-06-07")
+        
+        
         CselectedDate = Date()
         
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,11 +55,7 @@ class PlanGroupViewController: UIViewController {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        // 여기서 호출하는 이유는 present라는 함수 ViewController의 함수인데 이함수는 ViewController의 Layout이 완료된 이후에만 동작하기 때문
-        //Owner.loadOwner(sender: self)
-        print(Owner.getOwner())
-    }
+    
     func receivingNotification(plan: Plan?, action: DbAction?){
         // 데이터가 올때마다 이 함수가 호출되는데 맨 처음에는 기본적으로 add라는 액션으로 데이터가 온다.
         self.planGroupTableView.reloadData()  // 속도를 증가시키기 위해 action에 따라 개별적 코딩도 가능하다.
@@ -88,7 +81,7 @@ class PlanGroupViewController: UIViewController {
     
     @objc func longPress(_ gesture: UILongPressGestureRecognizer){
         if gesture.state == .began {
-                    
+            
             // ShowCommitMessageVC를 Storyboard ID를 이용하여 인스턴스화
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let showCommitMessageVC = storyboard.instantiateViewController(withIdentifier: "ShowCommitMessageVC") as! ShowCommitMessageViewController
@@ -149,10 +142,11 @@ extension PlanGroupViewController: UITableViewDataSource{
         (cell.contentView.subviews[2] as! UILabel).text = plan.owner
         (cell.contentView.subviews[1] as! UILabel).text = plan.content
         
+        // todoSwitch 버튼 생성
         let todoSwitch = UISwitch(frame: CGRect())
-        todoSwitch.addTarget(self, action: #selector(todoSwitchChanged(_:)), for: .valueChanged)
+        todoSwitch.addTarget(self, action: #selector(todoSwitchChanged(_:)), for: .valueChanged) // switch 변경이 있으면 todoSwitchChanged 함수 호출
         cell.accessoryView = todoSwitch
-        todoSwitch.isOn = plan.todo
+        todoSwitch.isOn = plan.todo // 앱을 다시 시작해도 todoSwith는 해당 plan의 todo bool 값으로 결정
         
         return cell
         
@@ -160,20 +154,20 @@ extension PlanGroupViewController: UITableViewDataSource{
     }
     
     @objc func todoSwitchChanged(_ sender: UISwitch) {
-        DispatchQueue.main.async {
-            guard let cell = sender.superview as? UITableViewCell,
-                  let indexPath = self.planGroupTableView.indexPath(for: cell) else {
-                return
-            }
-            
-            let plan = self.planGroup.getPlans(date: self.selectedDate)[indexPath.row].clone()
-            plan.todo = sender.isOn
-            // 저장 로직 작성
-            
-            self.saveChange(plan: plan)
+        
+        guard let cell = sender.superview as? UITableViewCell,
+              let indexPath = self.planGroupTableView.indexPath(for: cell) else {
+            return
         }
+        //Plan의 switch값이 변경되면 다시 저장
+        let plan = self.planGroup.getPlans(date: self.selectedDate)[indexPath.row].clone()
+        plan.todo = sender.isOn
+        // 저장 로직 작성
+        
+        self.saveChange(plan: plan)
+        
     }
-
+    
 }
 
 
@@ -258,6 +252,7 @@ extension PlanGroupViewController{
 }
 
 extension PlanGroupViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance{
+    // FSCalendar의 캘린더에서 날짜를 선택할 때
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         
         // 선택된 날짜를 selectedDate에 업데이트합니다.
@@ -371,7 +366,6 @@ extension UIImage {
 
 extension PlanGroupViewController{
     
-    //도전!
     func getCommit(startDate: String, endDate: String, completion: @escaping ([[String: Any]]?, Error?) -> Void) {
         // 전역변수 초기화..
         commitByDayCount = [:]
@@ -381,7 +375,7 @@ extension PlanGroupViewController{
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ" // 원본 날짜 형식
         
-        let apiKey = Bundle.main.apiKey
+        let apiKey = Bundle.main.apiKey // API 키 가져오기
         
         let urlString = "https://api.github.com/search/commits?q=author:\(Owner.getOwner())+committer-date:\(startDate)..\(endDate)&api_key=\(apiKey)"
         guard let url = URL(string: urlString) else {
@@ -392,6 +386,7 @@ extension PlanGroupViewController{
         let session = URLSession(configuration: .default)
         let request = URLRequest(url: url)
         
+        // 해당 url로 요청보내기
         let task = session.dataTask(with: request) { (data, response, error) in
             if let error = error {
                 completion(nil, error)
@@ -414,9 +409,10 @@ extension PlanGroupViewController{
                             // "message" 필드
                             if let message = item["commit"] as? [String: Any],
                                let commitMessage = message["message"] as? String {
+                                // 커밋 메시지 가져오기
                                 //print("Commit Message: \(commitMessage)")
                                 
-                                // Extract "date" field inside committer object
+                                // committer 객체 내부의 "date" 필드 추출
                                 if let commit = item["commit"] as? [String: Any],
                                    let committer = commit["committer"] as? [String: Any],
                                    let commitDateString = committer["date"] as? String,
@@ -425,7 +421,7 @@ extension PlanGroupViewController{
                                     let formattedDateFormatter = DateFormatter()
                                     formattedDateFormatter.dateFormat = "yyyy-MM-dd" // 원하는 출력 형식
                                     let formattedCommitDate = formattedDateFormatter.string(from: commitDate)
-                                    
+                                    // 커밋 날짜 가져오기
                                     //print("Commit Date: \(formattedCommitDate)")
                                     
                                     if let repository = item["repository"] as? [String: Any],
@@ -440,7 +436,7 @@ extension PlanGroupViewController{
                                         ]
                                         self.commitByMessage.append(commitData)
                                     }
-                                
+                                    
                                 }
                             }
                             
@@ -459,8 +455,8 @@ extension PlanGroupViewController{
         task.resume()
     }
     
-    
-    //달력의 년도, 달로 yyyy-MM-dd 형태로 format
+    //한달 단위로 데이터 가져오기
+    //달력의 년도, 달로 yyyy-MM-dd 형태로 format 함수
     func getCommitsForMonth(year: Int, month: Int) {
         //print(year, month)
         let currentDate = Date() // 현재 날짜와 시간 가져오기
@@ -506,6 +502,7 @@ extension PlanGroupViewController{
                 DispatchQueue.main.async { // 메인 큐에서 실행
                     self.getDayCommit() //2. 커밋한 날짜마다 커밋 갯수 저장
                     self.fsCalendar.reloadData() //3. UI load
+                    self.planGroupTableView.reloadData()
                     
                     if year == currentYear && month == currentMonth {
                         self.setOwnerMonthTotal() //4. 한 달에 commit한 일 수 구하기
@@ -526,10 +523,10 @@ extension PlanGroupViewController{
     // 커밋한 날짜들, 얼마나 커밋했는지
     func getDayCommit(){
         print("getDayCommit() 실행  =============================")
-        if !commitByMessage.isEmpty {
+        if !commitByMessage.isEmpty { //commitByMessage 비어 있지 않으면
             for commit in commitByMessage {
-                if let dateString = commit["date"] as? String {
-                    if let count = commitByDayCount[dateString] {
+                if let dateString = commit["date"] as? String { //"date" 값을 가지고와
+                    if let count = commitByDayCount[dateString] { // 해당 date의 commitByDayCount를 가지고 와서 +1
                         commitByDayCount[dateString] = count + 1
                     } else {
                         commitByDayCount[dateString] = 1

@@ -36,9 +36,7 @@ class PlanGroup: NSObject{
             parentNotification(plan, action) // 역시 부모에게 알림내용을 전달한다.
         }
     }
-//    func setGithubID(withGithubID: String){
-//        self.githubID = withGithubID
-//    }
+
 }
 extension PlanGroup{    // PlanGroup.swift
     

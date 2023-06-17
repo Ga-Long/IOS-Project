@@ -23,9 +23,9 @@ class StartViewController: UIViewController, LoginViewControllerDelegate{
         }
     }
     
- 
+    
     var githubID: String?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,7 +57,7 @@ class StartViewController: UIViewController, LoginViewControllerDelegate{
         // PlanGroupViewController로 전환
         showPlanGroupViewController()
     }
-
+    
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -71,7 +71,7 @@ class StartViewController: UIViewController, LoginViewControllerDelegate{
             if let loginViewController = segue.destination as? LoginViewController {
                 loginViewController.delegate = self
             }
-
+            
         }
     }
     
@@ -82,13 +82,13 @@ class StartViewController: UIViewController, LoginViewControllerDelegate{
             UserDefaults.standard.set(githubID, forKey: "owner")
         }
     }
-
+    
     func showPlanGroupViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let tabBarController = storyboard.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
         tabBarController.modalPresentationStyle = .fullScreen
         self.present(tabBarController, animated: true, completion: nil)
-       
+        
     }
     
 }

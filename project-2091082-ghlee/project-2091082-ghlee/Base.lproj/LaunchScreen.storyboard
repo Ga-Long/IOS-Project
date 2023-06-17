@@ -18,19 +18,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="keX-G7-q6I">
-                                <rect key="frame" x="25" y="236.99999999999997" width="146" height="84.666666666666657"/>
+                                <rect key="frame" x="25" y="236.99999999999997" width="173.33333333333334" height="120.66666666666666"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="eLF-2Z-tEY">
-                                        <rect key="frame" x="0.0" y="0.0" width="118" height="84.666666666666671"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="173.33333333333334" height="120.66666666666667"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="함께 해요" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VGg-xk-Ac6">
-                                                <rect key="frame" x="0.0" y="0.0" width="118" height="38.333333333333336"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="grass.png" translatesAutoresizingMaskIntoConstraints="NO" id="FC2-dJ-3fp">
+                                                <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="28" id="NAH-JQ-QVM"/>
+                                                    <constraint firstAttribute="height" constant="28" id="Qnh-9t-wA8"/>
+                                                </constraints>
+                                            </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gqu-pb-DFG">
-                                                <rect key="frame" x="0.0" y="46.333333333333314" width="97.333333333333329" height="38.333333333333343"/>
+                                                <rect key="frame" x="0.0" y="36" width="97.333333333333329" height="38.333333333333343"/>
                                                 <color key="tintColor" red="0.040431994944810867" green="0.93533915281295776" blue="0.046088613569736481" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="Co">
@@ -50,15 +51,14 @@
                                                 </attributedString>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="습관을 키워요" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VGg-xk-Ac6">
+                                                <rect key="frame" x="0.0" y="82.333333333333314" width="173.33333333333334" height="38.333333333333343"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                     </stackView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="grass.png" translatesAutoresizingMaskIntoConstraints="NO" id="FC2-dJ-3fp">
-                                        <rect key="frame" x="118" y="28.333333333333314" width="28" height="28"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="28" id="NAH-JQ-QVM"/>
-                                            <constraint firstAttribute="height" constant="28" id="Qnh-9t-wA8"/>
-                                        </constraints>
-                                    </imageView>
                                 </subviews>
                             </stackView>
                         </subviews>
